@@ -1,0 +1,818 @@
+\documentclass[12pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+%\usepackage{mathptmx}
+%\usepackage{apacite}
+%\usepackage{cite}
+
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=20mm,
+ top=20mm,
+ }
+
+\usepackage[numbers]{natbib}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{listings}
+
+%\usepackage{diagbox}
+\usepackage{rotating}
+\usepackage{chngcntr}
+\usepackage{multicol}
+\usepackage[bf,small,tableposition=top]{caption}
+\usepackage{subcaption}
+
+\usepackage{titlesec}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mathdots}
+\usepackage{amsfonts}
+\usepackage{tcolorbox}
+%\usepackage{extarrows}
+%\usepackage{moreverb}
+\usepackage[page]{totalcount}
+\usepackage{totcount}
+\regtotcounter{page}
+\usepackage[hang, flushmargin]{footmisc}
+\usepackage[colorlinks=true]{hyperref}
+%\usepackage[pdftex, hyperfootnotes=false, colorlinks=false]{hyperref}
+%\usepackage{footnotebackref}
+
+
+\usepackage{tikz-cd}
+
+\usepackage{fancyhdr}
+\setlength{\headheight}{14.5pt}
+
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+
+\fancyhf{}
+\fancyfoot[R]{(\thepage~ of \total{page})}
+\lfoot{Authored by Leonard O. Afeke \today}
+\chead{Cyber security Fundamentals | Mathematics (Exercise 1.1)}
+
+\DeclareMathOperator{\Frob}{Frob}
+\DeclareMathOperator{\plim}{\underleftarrow{\lim}^{i}}
+\DeclareMathOperator{\lm}{\underleftarrow{\lim}^{*}}
+
+\parskip=0.5\baselineskip
+\parindent=0pt
+\renewcommand{\baselinestretch}{1.5}
+
+%%%%%%%%%%%% Line spacesing codes %%%%%%%%%%%%
+\usepackage{setspace}
+%\singlespacing
+\onehalfspacing
+%\doublespacing
+%\setstretch{1.1}
+
+\usepackage{lineno} % This package together with lineno.sty numbers every line. Makes it easy for edditing.
+
+\newtheorem{thm}[subsection]{Theorem}
+% Rest is not in italics.
+%\theoremstyle{definition}
+\newtheorem{lem}[subsection]{Lemma}
+\newtheorem{cor}[subsection]{Corollary}
+\newtheorem{conj}[subsection]{Conjecture}
+\newtheorem{pro}[subsection]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{defn}[subsection]{Definition}
+\newtheorem{rem}[subsection]{Remark}
+\newtheorem{exa}[subsection]{Example}
+\newtheorem{con}[subsection]{Condition}
+
+\newcommand{\ora}[1]{{\xrightarrow{\hspace{0.2cm #1 \hspace{0.2cm}}}}}
+\newcommand{\ola}[1]{{\xleftarrow{#1}}}
+\newcommand{\hm}[3]{\mathrm{Hom}_{\mathcal{#1}}({#2}, {#3})}
+\newcommand{\dor}[1]{{\xrightarrow{#1}}}
+\newcommand{\sol}[1]{{\bf \emph{Solution}} #1}
+
+\newcommand{\cA}{\mathcal{A}}\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cE}{\mathcal{E}}\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cG}{\mathcal{G}}\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cI}{\mathcal{I}}\newcommand{\cJ}{\mathcal{J}}
+\newcommand{\cK}{\mathcal{K}}\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cM}{\mathcal{M}}\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cO}{\mathcal{O}}\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cQ}{\mathcal{Q}}\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cS}{\mathcal{S}}\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cU}{\mathcal{U}}\newcommand{\cV}{\mathcal{V}}
+\newcommand{\cW}{\mathcal{W}}\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cY}{\mathcal{Y}}\newcommand{\cZ}{\mathcal{Z}}
+
+\newcommand{\bA}{\mathbb{A}}\newcommand{\bB}{\mathbb{B}}
+\newcommand{\bC}{\mathbb{C}}\newcommand{\bD}{\mathbb{D}}
+\newcommand{\bE}{\mathbb{E}}\newcommand{\bF}{\mathbb{F}}
+\newcommand{\bG}{\mathbb{G}}\newcommand{\bH}{\mathbb{H}}
+\newcommand{\bI}{\mathbb{I}}\newcommand{\bJ}{\mathbb{J}}
+\newcommand{\bK}{\mathbb{K}}\newcommand{\bL}{\mathbb{L}}
+\newcommand{\bM}{\mathbb{M}}\newcommand{\bN}{\mathbb{N}}
+\newcommand{\bO}{\mathbb{O}}\newcommand{\bP}{\mathbb{P}}
+\newcommand{\bQ}{\mathbb{Q}}\newcommand{\RR}{\mathbb{R}}
+\newcommand{\bS}{\mathbb{S}}\newcommand{\bT}{\mathbb{T}}
+\newcommand{\bU}{\mathbb{U}}\newcommand{\bV}{\mathbb{V}}
+\newcommand{\bW}{\mathbb{W}}\newcommand{\bX}{\mathbb{X}}
+\newcommand{\bY}{\mathbb{Y}}\newcommand{\bZ}{\mathbb{Z}}
+
+\newcommand{\B}[1]{\mathbf{#1}}
+\newcommand{\BB}[1]{\mathbb{#1}}
+
+
+
+
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+
+\begin{document}
+Consider the following $3 \times 3$ grid.
+
+\begin{center}
+    \begin{tabular}{ c|ccc| } 
+        &col 0 & col 1 & col 2\\
+     \hline
+     row 0&0 & 1 & 2 \\ 
+     row 1&3& 4 &5\\ 
+     row 2&6 & 7& 8\\ 
+     \hline
+    \end{tabular}
+\end{center}
+
+\begin{rem}
+    Note that in this exercise, indexing always starts from 0.
+\end{rem}
+\section*{Exercise 1}
+The row of an index $i$ in an $m \times n$ is given by the floor division $i//n$, and the column of $i$ is given by the modulus $i\% n$. For a $3 \times 3$ matrix,
+we have $n=3$. So for an index $i$, the quotient $i//3$ gives the row of $i$, and $i \% 3$ gives the column of $i$.
+
+The functions row$(i)$ and col$(i)$ take as argument an integer $i$ between $0$ and $8$ inclusive and return the quotient $i // 3$ representing the row of $i$ and the remainder $i \%3$ representing the column of $i$ respectively.
+
+For example, index $5$ is in row $5//3 = 1$, which is the second row. It is also in col $5 \% 3 = 2$, which is the third column.
+
+\begin{lstlisting}[language=Python, caption=Exercise 1]
+    def row(i : int)->int:
+        """ 
+        Determine the row of index `i` in a 3x3 grid. 
+
+        Parameters 
+        ---------- 
+        i : int 
+            An index between 0 and 8. 
+            
+        Returns 
+        ------- 
+        int 
+            The row number (0, 1, or 2) of the index `i`. 
+        
+        Example 
+        ------- 
+        row(5) -> 1 (Second row) 
+        
+        Raises 
+        ------ 
+        TypeError 
+            If `i` is not an integer. 
+        IndexError 
+            If `i` is not between 0 and 8 inclusive. 
+        """
+
+        if not isinstance(i, int):
+            raise TypeError(f"Sorry. '{i}' must be an integer")
+        
+        if i not in range(0, 9):
+            raise IndexError(f"Sorry. '{i}' must be a number between 0 and 8 inclusive.")
+        
+        
+        return i//3
+
+    def col(i:int) -> int:
+        """
+        Determine the column of index `i` in a 3x3 grid. 
+
+        Parameters
+        ----------
+        i : int
+            An index between 0 and 8. 
+
+        Returns
+        --------
+        int
+            The column number (0,1, or 2) of the index 'i'.
+
+        Example 
+        -----------------------
+        col(5) -> 2 (Third column)
+
+        Raises 
+        ------ 
+        TypeError 
+            If `i` is not an integer. 
+        IndexError 
+            If `i` is not between 0 and 8 inclusive.
+        """
+        if not isinstance(i, int):
+            raise TypeError(f"Sorry. '{i}' must be an integer")
+        
+        if i not in range(0, 9):
+            raise IndexError(f"Sorry. '{i}' must be a number between 0 and 8 inclusive.")
+        
+        
+        return i%3
+        
+\end{lstlisting}
+    
+
+
+
+\section*{Exercise 2}
+
+The function $intermediate\_node(i : int, \; j : int)$  aims to determine whether there is an intermediate node between two given nodes $i$ and $j$ in a $3 \times 3$ grid, with nodes numbered $0$ through $8$, and if so, 
+returns the intermediate node. 
+
+The function begins by initilizing two variables $col\_set$ and $row\_set$. The varialbe $col\_set$ is assigned the set of column indices $\{col(i),\; col(j)\}$ of nodes the nodes $i$ and $j$. 
+The variable $row\_set$ is assigned the set $\{row(i),\; row(j)\}$ of row indices of the nodes $i$ and $j$. 
+\begin{enumerate}
+    \item To ensure $i$ and $j$ are in different rows, we need $abs(row(i)-row(j)) == 2$. This implies the length of $row\_set$ is 2. 
+    \item To ensure $i$ and $j$ are in different columns, we need $abs(col(i)-col(j)) == 2$. This implies the length of $col\_set$ is 2. 
+    \item To ensure $i$ and $j$ are in the same rows, the length of $row\_set$ must be 1. 
+    \item To ensure $i$ and $j$ are in the same columns, the length of $col\_set$ must be 1. 
+\end{enumerate}
+
+Now, if $abs(row(i)-row(j)) == 2$ and $len(col\_set) == 1$, then $i$ and $j$ are in the same column with an intermediate node $\frac{i+j}{2}$ between them.
+
+Next, if $abs(col(i)-col(j)) == 2$ and $len(row\_set) == 1$, then $i$ and $j$ are in the same row with an intermediate node $\frac{i+j}{2}$ between them. 
+
+Finally, if $len(row_set) == 2$, $len(col_set) == 2$, $abs(row(i)-row(j)) == 2$ and $abs(col(i)-col(j)) == 2$ the $i$ and $j$ lie in a diagonal, with an intermediate node $\frac{i+j}{2}$ between them.
+
+In summary, three sets of conditions are tested. If each set is satisfied, an intermediate node is returned by the function. Othersise, it returns $-1$.
+
+\begin{lstlisting}[language=Python, caption=Exercise 2]
+    
+    def intermediate_node(i: int, j: int) -> int:
+        """
+        Determine the intermediate node `k` lying between `i` and `j` in a 3x3 grid, if it exists.
+        
+        Parameters
+        ----------
+        i : int 
+            An index between 0 and 8.
+        j : int 
+            An index between 0 and 8.
+
+        Returns
+        -------
+        int
+            The node `k` lying between `i` and `j` if it exists, otherwise -1.
+
+        Raises
+        ------
+        TypeError
+            If `i` or `j` is not an integer.
+        IndexError
+            If `i` or `j` is not between 0 and 8 inclusive.
+        
+        Examples
+        --------
+        >>> intermediate_node(0, 8)
+        4
+        >>> intermediate_node(1, 5)
+        -1
+        """
+        if not all(isinstance(index, int) for index in (i, j)):
+            raise TypeError(f"Sorry, both '{i}' and '{j}' must be integers")
+        
+        if not all(0 <= index <= 8 for index in (i, j)):
+            raise IndexError(f"Sorry, both '{i}' and '{j}' must be numbers between 0 and 8 inclusive.")
+        
+        col_set = {col(i), col(j)}
+        row_set = {row(i), row(j)}
+        
+        # Checking for an intermediate in a column.
+        if abs(row(i) - row(j)) == 2 and len(col_set) == 1:
+            return (i + j) // 2
+        
+        # Checking for an intermediate in a row.
+        if abs(col(i) - col(j)) == 2 and len(row_set) == 1:
+            return (i + j) // 2
+        
+        # Checking for an intermediate in a diagonal.
+        if len(row_set) == 2 and len(col_set) == 2 \
+            and abs(row(i) - row(j)) == 2 and abs(col(i) - col(j)) == 2:
+            return (i + j) // 2
+        
+        return -1
+
+\end{lstlisting}
+
+\section*{Exercise 3}
+In this exercise, the function $is\_admissible(pattern, i)$ is defined. It takes two arguments, $pattern$ and an index $i$, and determines if $pattern$ can be extended to $pattern + (i,)$.
+
+The function starts by checking if $i$ belongs to $pattern$; it returns false if this is the case. This ensures
+that a node is not visited more than once.
+
+Next, $pattern$ is extended to a new pattern $pattern + (i,)$. The extension is assigned to a variable called $new\_pattern$. This new pattern in passed as an argument to a helper 
+function $is\_valid\_pattern(new\_pattern)$ which returns true or false depending on the validity of $new\_pattern$. If true is returned, then $pattern$ can be extended to $pattern + (i,)$. Otherwise, it cannot be extended.
+
+
+The helper function, $is\_valid\_pattern(pattern: tuple)$, takes as argument a tuple of integers ranging from 0 through 8 and returns true of false depending on the validity of pattern.
+A pattern $p$ is deemed valid, if it satisfies the following:
+\begin{enumerate}
+    \item $p$ is valid if it is the empty tuple $()$.
+    \item If $p$ in not empty then
+    \begin{enumerate}
+        \item loop through its elements to ensure a node is not repeated. If a node appears more that once, then $p$ is 
+         not a valid pattern; the function returns false.
+        \item if an intermediate $k$ exists between two consecutive nodes $i$ and $j$ in $p$ and $(i, k, j)$ is not a subset of $p$,
+         then $p$ is not a vlid pattern. Again the function returns false.
+    \end{enumerate} 
+\end{enumerate}
+The function returns true otherwise.
+
+\begin{lstlisting}[language=Python, caption=Exercise 3]
+    def is_admissible(pattern: tuple, i: int) -> bool:
+        """
+        Determines if the index i can be appended to the given pattern
+
+        Parameters
+        ----------
+        pattern: tuple of int
+            A tuple of digits from 0 to 8 representing a valid swipe pattern
+        i: int
+            An integer between 0 to 8 representing a potential extension node.
+
+        Returns
+        -------
+        bool
+            True if index i can be appended to pattern, False otherwise.
+        """
+
+        if i in pattern:
+            return False
+        
+        new_pattern = pattern + (i,)
+        return is_valid_pattern(new_pattern)
+    #######################################################
+        # Helper function for Exercise 3: is_valid_pattern.
+    #######################################################
+
+    def is_valid_pattern(pattern): 
+        """ 
+        Determines if the given swipe pattern is valid according to Android pattern rules. 
+
+        Parameters 
+        ---------- 
+        pattern : tuple 
+            A tuple of digits from 0 to 8 representing a swipe pattern. 
+            
+        Returns 
+        ------- 
+        bool 
+            True if the pattern is valid, False otherwise. 
+        """ 
+        
+        # Empty pattern ()
+        if len(pattern) == 0: 
+            return True 
+        
+        # Non-empty pattern
+        for i in range(1, len(pattern)): 
+            if pattern[i] in pattern[:i]:
+                False
+
+            intermediate = intermediate_node(pattern[i-1], pattern[i])         
+            if intermediate != -1 and intermediate not in pattern[i-1:i+1]: 
+                return False 
+        return True
+
+    ###############################################
+\end{lstlisting}
+
+\section*{Exercise 4}
+In this exercise, the function $extensions(pattern: tuple)$ takes as argument a valid pattern represented as a Python tuple, and returns the set of all admissible extensions of this pattern by 1.
+Thus, $exten(pattern: tuple)$ will rely on the function $is\_admissible(pattern: tuple, i: int)$ to generate this set of admissible extensions.
+
+Here, a for loop comes in handy. We loop through the nodes from $0$ through $8$ and ckeck if they are admissible to the pattern. An empty set, $set\_of\_tuples = set()$, is initialized. 
+If $i$ is one of the numbers from 0 through 8, and  $is\_admissible(pattern, i)$ returns true, then $pattern + (i,)$ is added to the set $set\_of\_tuples$. This repeats until the for loop ends.
+
+Finally, the function $extensions(pattern)$ returns the set $set\_of\_tuples$.
+
+\begin{lstlisting}[language=Python, caption=Exercise 4]
+    def extensions(pattern: tuple) -> set:
+        """
+        Extends a pattern by one more node.
+        
+        Parameters
+        ----------
+        pattern : tuple
+            A tuple of digits from 0 to 8 representing a valid swipe
+            pattern
+
+        Returns
+        -------
+            The set of all possible extensions of pattern by 1 more node. 
+        """
+
+        set_of_tuples = set()
+
+        for i in range(9):
+            if is_admissible(pattern, i):
+                extended_pattern = pattern + (i,)
+                set_of_tuples.add(extended_pattern)
+            
+        return set_of_tuples
+\end{lstlisting}
+
+Question: What would go wrong here if we instead chose to represent our patterns as lists rather than tuples? 
+How could you modify your approach to accommodate this?
+
+If we choose to represent our patterns as lists, rather than tuples, then
+\begin{itemize}
+    \item the expression $pattern + (i,)$ will throw a TypeError exception. This is because a list and a tuple cannot be 
+    concatenatd. If a list is chosen, then we nned to first convert the list to a tuple, concatenate.
+    \item Also, the function $is\_admissible$ will throw a TypeError exception since it takse as argument a tuple of 
+    integers.
+\end{itemize}
+
+\begin{lstlisting}[language=Python, caption=Modification for  Exercise 4]
+    def extensions(pattern: list) -> set:
+        '''
+        Parameters
+        ----------
+        pattern : list
+            A list of digits from 0 to 8 representing a valid swipe
+            pattern
+
+        Returns
+        -------
+            The set of all possible extensions of pattern by 1 more 
+            node. 
+        '''
+
+        set_of_tuples = set()
+
+        for i in range(9):
+            if is_admissible(tuple(pattern), i):
+                extend_pattern = tuple(pattern) + (i,)
+                set_of_tuples.add(extend_pattern)
+            
+        return set_of_tuples
+\end{lstlisting}
+
+\section*{Exercise 5}
+In this exercise, we write a Python function $generate\_patterns()$ which outputs a Python dictionary whose keys are integers 0 through 9 and whose value at integer i is the set of all swipe patterns of length i.
+
+The function begins by first creating a dictionary whose keys are integers from 0 through 9 and whose initial values at each integer is an empty set. 
+The first for loop is used to create a set of patterns of length one. So, the patterns of the form $(i,)$ are added to the set $pattern[1]$, where $i$ is an integer from 0 through 8. The next for loop is used to create the other patterns of length 2 through 9.
+
+Next, two nested for loops are used to create the other patterns of length 2 through 9.
+The outer for loop loops through the keys $k$ of the dictionary starting from 2 through 9. The inner for loop loops through the set $patterns[k-1]$ and each pattern of length $k-1$ is passed to the function $extensions$ from Exercise 5 to generate a set of admissible patterns of length $k$. 
+The set $patterns[k]$ is then updated with the set of admissible patterns.
+
+The function $generate\_patterns()$ then returns the dictionary $pattern$.
+
+\begin{lstlisting}[language=Python, caption=Sample Python Code]
+    def generate_patterns():
+        '''
+        Returns
+        -------
+        A dictionary whose keys are integers 0 through 8 and whose 
+        value at integer i is the set of all swipe patterns of length i
+        '''
+
+        patterns = {k : set() for k in range(10)}
+
+        # patterns of length 1
+        for i in range(9):
+            patterns[1].add((i,))
+
+        for k in range(2,10):
+            for pattern in patterns[k-1]:
+                new_pattern = extensions(pattern)
+                patterns[k].update(new_pattern)
+        return patterns
+
+\end{lstlisting}
+
+\section*{Exercise 6}
+How many possible swipe patterns are there of length 4 or more? How many patterns of length 9?
+
+Generate all patterns with the function $generate\_patterns$ from Exercise 5.
+Use tuple comprehension -- $sum(len(pattern_dict[i]) for i in range(4,10))$ -- to sum all the patterns of length 4 or more. Here $len(pattern_dict[i])$ computes 
+the length of patterns in the set $pattern_dict[i]$ of length $i$. The for loop loops over the number from 4 through 9.
+
+Also, patterns of length 9 is $len(pattern_dict[9])$. The results are printed using f-string notation.
+
+\begin{lstlisting}[language=Python, caption=Exercise 6]
+    pattern_dict = generate_patterns()
+    pattern_length_4_or_more = sum(len(pattern_dict[i]) for i in range(4,10))
+    pattern_length_9 = len(pattern_dict[9])
+    print(pattern_length_9)
+    print(f"Number of possible swipe patterns of length 4 or more: {pattern_length_4_or_more}")
+    print(f"Number of possible swipe patterns of length 9: {pattern_length_9}")
+\end{lstlisting}
+
+{\color{red} \rule{\linewidth}{0.5mm}}
+Output of code Snippet
+\begin{itemize}
+    \item Number of possible swipe patterns of length 4 or more: 139880
+    \item Number of possible swipe patterns of length 9: 32256
+\end{itemize}
+{\color{red} \rule{\linewidth}{0.5mm}}
+
+\section*{Exercise 7}
+I watched my friend type in her password over her shoulder. I saw that her pattern has the following properties:
+\begin{itemize}
+    \item It starts by connecting node 1 to node 0
+    \item It uses every node
+    \item The final edge connected node 7 to node 8
+    \item At some point, I saw her connect node 4 to node 6
+\end{itemize}
+How many possible patterns fit this description? 
+
+The code snippet below filters the patterns that fit the description above. Here, an empty list $[]$ is assigned to the variable $filtered\_patterns$.
+Since every node will be used, then all patterns that fit the description are of length 9. A for loop is used to loop through all the patterns of 
+length 9 in the set $pattern\_dict$. The if statement ensure that the pattern first connects node 1 to 0. It also ensures that the last ends with node 7 connected to 8. 
+It also ensures that node 4 and 6 are in the pattern, and that node 4 comes before 6. The patterns that fit the condition are appended to $filtered\_patterns$ and its 
+length computed.
+
+\begin{lstlisting}[language=Python, caption=Exercise 7]
+    filtered_patterns = []
+    pattern_dict = generate_patterns()
+    for pattern in pattern_dict[9]:
+        if (pattern[0], pattern[1]) == (1,0) and pattern[-2:] == (7,8)\
+            and 4 in pattern and 6 in pattern\
+                and 4 in pattern[:pattern.index(6)+1]:
+            filtered_patterns.append(pattern)
+    number_of_valid_patterns = len(filtered_patterns)
+\end{lstlisting}
+
+{\color{red} \rule{\linewidth}{0.5mm}}
+Output of code Snippet
+\begin{itemize}
+    \item Number of possible swipe patterns fitting the description is: 18
+\end{itemize}
+{\color{red} \rule{\linewidth}{0.5mm}}
+
+\section*{Optional Task}
+In this section we loop at some metrics for measuring pattern complexity.
+
+\subsection*{Metrics and Code snippets }
+The following are some metrics for measuring the complexity of a pattern.
+\begin{itemize}
+    \item \textbf{Length of a pattern}
+    \item \textbf{Change in direction:} Counting changes in direction between consecutive moves
+    \item \textbf{Change in angle:} Counts the number of angle changes (e.g., straight, right angles, obtuse angles) in the pattern
+\end{itemize}
+The following code snippets implements the metrics given above
+
+\begin{lstlisting}[language=Python, caption=Code snippet to compute angle between two vectors]
+    import android_swipe_pattern as asp
+    from numpy import array, sqrt, dot, degrees, arccos
+
+    def compute_angle(x: tuple[int, int], y: tuple[int, int], z: tuple[int, int]) -> float:
+        """ 
+        Calculate the angle between three points. 
+        
+        Parameters 
+        ---------- 
+        x, y, z : tuple[int, int] 
+            Coordinates of the points. 
+        
+        Returns 
+        ------- 
+        float 
+            The angle in degrees between two vectors fromed by the three points. 
+        """
+
+        def vector(a,b):
+            return (b[0]-a[0], b[1]- a[1])
+        # Angle formula: v.u = |u||v|cos(theta)
+        
+        u = vector(x,y)
+        v = vector(z,y)
+
+        dot_product = dot(array(u), array(v))
+        norm_u = sqrt(u[0]**2 + u[1]**2)
+        norm_v = sqrt(v[0]**2 + v[1]**2)
+        cos_theta = dot_product/ (norm_u * norm_v)
+        
+        return degrees(arccos(cos_theta))
+\end{lstlisting}
+
+\begin{lstlisting}[language=Python, caption=Code snippet the metric Change in angle]
+    def angle_change(pattern: tuple[int, ...]) -> int:
+        """
+        Compute the number of angle changes in the pattern.
+
+        Parameters
+        ----------
+        pattern: tuple[int, ...]
+            A tuple of digits from 0 to 8 representing a swipe pattern.
+
+        Returns
+        -------
+        int
+            The number of significan angle changes in the pattern.
+        """
+        coordinate_of_nodes = [(asp.row(node), asp.col(node)) for node in pattern]
+        number_of_angle_changes = 0
+
+        for i in range(1, len(coordinate_of_nodes)-1):
+            angle = compute_angle(coordinate_of_nodes[i-1], coordinate_of_nodes[i], coordinate_of_nodes[i+1])
+            if angle != 180:
+                number_of_angle_changes += 1
+
+        return number_of_angle_changes
+\end{lstlisting}
+
+\begin{lstlisting}[language=Python, caption=Code Snippet for the metric change in direction]
+    def calculate_direction(a: int, b: int) -> str: 
+        """ 
+        Calculate the direction of the move from a to b. 
+
+        Parameters 
+        ---------- 
+        a : int 
+            Starting index. 
+        b : int 
+            Ending index. 
+            
+        Returns 
+        ------- 
+        str 
+            Direction of the move: "horizontal", "vertical", "diagonal", or "same". 
+        """ 
+        row_a, col_a = asp.row(a), asp.col(a) 
+        row_b, col_b = asp.row(b), asp.col(b) 
+        if row_a == row_b and col_a != col_b: 
+            return "horizontal" 
+        elif col_a == col_b and row_a != row_b: 
+            return "vertical" 
+        elif row_a != row_b and col_a != col_b: 
+            return "diagonal" 
+        else: 
+            return "same"
+\end{lstlisting}
+
+\begin{lstlisting}[language=Python, caption=Code snippet to compute pattern complexity score.]
+    def complexity_score(pattern: tuple[int, ...]) -> int:
+        """
+        Compute the complexity score of a pattern using the metrics:
+            Length of pattern
+            Changes in direction
+            Changes in angle
+
+        Parameters
+        ----------
+        pattern: tuple[int, ...]
+            A tuple of digits from 0 to 8 representing a swipe pattern.
+
+        Returns
+        -------
+        int 
+            The complexity score of the pattern
+        """
+
+        score = 0
+
+        #Length of pattern
+        score += len(pattern)
+        
+        # Changes in direction
+        for i in range(2,len(pattern)):
+            previous_direction = calculate_direction(pattern[i-2], pattern[i-1])
+            current_direction = calculate_direction(pattern[i-1], pattern[i])
+            if previous_direction != current_direction:
+                score += 1
+
+        # Changes in angle 
+        score += angle_change(pattern=pattern)
+
+
+        return score
+\end{lstlisting}
+
+\subsection*{Code snippet to visualize a complex pattern}
+\begin{lstlisting}[language=Python, caption=Code snippet to visualize a complex pattern]
+    def random_pattern(length, pattern_dict):
+        '''
+        Parameters
+        ----------
+        length : int
+            an integer length between 2 and 9
+        pattern_dict : dict
+            A dictionary mapping pattern lengths to sets of patterns 
+            (like the output of generate_patterns, for example)
+
+        Returns
+        -------
+        A random choice of pattern from pattern_dict of the prescribed
+        length  
+        '''
+        out = random.choice(list(pattern_dict[length]))
+        print(out)
+        return out
+
+
+    def draw_arrow(i, j):
+        '''
+        Parameters
+        ----------
+        i : int
+            A node between 0 and 8.
+        j : int
+            A node between 0 and 8.
+
+        Returns
+        -------
+        None. Plots an arrow connecting node i to node j
+        '''
+        x1 = asp.col(i)
+        y1 = asp.row(i)
+        x2 = asp.col(j)
+        y2 = asp.row(j)
+        dx, dy = x2 - x1, y2 - y1
+    
+        plt.arrow(x1, y1, dx, dy, head_width = 0.04, width = 0.01, ec ='green')
+       
+    def draw(path):
+        '''
+        Parameters
+        ----------
+        path : tuple
+            A tuple of integers representing a swipe pattern
+
+        Returns
+        -------
+        None. Plots a visualization of the input pattern
+        '''
+
+        #Clear any existing plots
+        plt.clf()
+
+        #Draw the 9 dots representing the grid
+        for i in range(0,3):
+            for j in range(0,3):      
+                plt.scatter(i, j, s=200, c='black',  edgecolors='black')
+                
+        #Invert the y-axis
+        plt.ylim(2.1, -0.1)
+        
+        #Can't draw a path of length less than 2
+        if len(path) < 2: 
+            return
+        
+        #Connect each pair of adjacent nodes with an arrow:
+        for i in range(len(path)-1):
+            draw_arrow(path[i], path[i+1])
+            
+        #Display the result
+        plt.show()
+\end{lstlisting}
+
+\begin{lstlisting}[language=Python, caption=Plot of complex pattern]
+    if __name__ == '__main__':
+        from random import choice
+        pattern_dict = generate_complex_patterns(threshold=5)
+        random_length = choice(range(4,10))
+        pattern = random_pattern(length=random_length, pattern_dict=pattern_dict)
+        draw(path=pattern)
+\end{lstlisting}
+
+\end{document}
+

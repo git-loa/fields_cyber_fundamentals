@@ -1,0 +1,230 @@
+\documentclass[12pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+%\usepackage{mathptmx}
+%\usepackage{apacite}
+%\usepackage{cite}
+
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=20mm,
+ top=20mm,
+ }
+
+\usepackage[numbers]{natbib}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{listings}
+
+%\usepackage{diagbox}
+\usepackage{rotating}
+\usepackage{chngcntr}
+\usepackage{multicol}
+\usepackage[bf,small,tableposition=top]{caption}
+\usepackage{subcaption}
+
+\usepackage{titlesec}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mathdots}
+\usepackage{amsfonts}
+\usepackage{tcolorbox}
+%\usepackage{extarrows}
+%\usepackage{moreverb}
+\usepackage[page]{totalcount}
+\usepackage{totcount}
+\regtotcounter{page}
+\usepackage[hang, flushmargin]{footmisc}
+\usepackage[colorlinks=true]{hyperref}
+%\usepackage[pdftex, hyperfootnotes=false, colorlinks=false]{hyperref}
+%\usepackage{footnotebackref}
+
+
+\usepackage{tikz-cd}
+
+\usepackage{fancyhdr}
+\setlength{\headheight}{14.5pt}
+
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+
+\fancyhf{}
+\fancyfoot[R]{(\thepage~ of \total{page})}
+\lfoot{Authored by Leonard O. Afeke \today}
+\chead{Cyber security Fundamentals | Mathematics (Exercise 1.1)}
+
+\DeclareMathOperator{\Frob}{Frob}
+\DeclareMathOperator{\plim}{\underleftarrow{\lim}^{i}}
+\DeclareMathOperator{\lm}{\underleftarrow{\lim}^{*}}
+
+\parskip=0.5\baselineskip
+\parindent=0pt
+\renewcommand{\baselinestretch}{1.5}
+
+%%%%%%%%%%%% Line spacesing codes %%%%%%%%%%%%
+\usepackage{setspace}
+%\singlespacing
+\onehalfspacing
+%\doublespacing
+%\setstretch{1.1}
+
+\usepackage{lineno} % This package together with lineno.sty numbers every line. Makes it easy for edditing.
+
+\newtheorem{thm}[subsection]{Theorem}
+% Rest is not in italics.
+%\theoremstyle{definition}
+\newtheorem{lem}[subsection]{Lemma}
+\newtheorem{cor}[subsection]{Corollary}
+\newtheorem{conj}[subsection]{Conjecture}
+\newtheorem{pro}[subsection]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{defn}[subsection]{Definition}
+\newtheorem{rem}[subsection]{Remark}
+\newtheorem{exa}[subsection]{Example}
+\newtheorem{con}[subsection]{Condition}
+
+\newcommand{\ora}[1]{{\xrightarrow{\hspace{0.2cm #1 \hspace{0.2cm}}}}}
+\newcommand{\ola}[1]{{\xleftarrow{#1}}}
+\newcommand{\hm}[3]{\mathrm{Hom}_{\mathcal{#1}}({#2}, {#3})}
+\newcommand{\dor}[1]{{\xrightarrow{#1}}}
+\newcommand{\sol}[1]{{\bf \emph{Solution}} #1}
+
+\newcommand{\cA}{\mathcal{A}}\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cE}{\mathcal{E}}\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cG}{\mathcal{G}}\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cI}{\mathcal{I}}\newcommand{\cJ}{\mathcal{J}}
+\newcommand{\cK}{\mathcal{K}}\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cM}{\mathcal{M}}\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cO}{\mathcal{O}}\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cQ}{\mathcal{Q}}\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cS}{\mathcal{S}}\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cU}{\mathcal{U}}\newcommand{\cV}{\mathcal{V}}
+\newcommand{\cW}{\mathcal{W}}\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cY}{\mathcal{Y}}\newcommand{\cZ}{\mathcal{Z}}
+
+\newcommand{\bA}{\mathbb{A}}\newcommand{\bB}{\mathbb{B}}
+\newcommand{\bC}{\mathbb{C}}\newcommand{\bD}{\mathbb{D}}
+\newcommand{\bE}{\mathbb{E}}\newcommand{\bF}{\mathbb{F}}
+\newcommand{\bG}{\mathbb{G}}\newcommand{\bH}{\mathbb{H}}
+\newcommand{\bI}{\mathbb{I}}\newcommand{\bJ}{\mathbb{J}}
+\newcommand{\bK}{\mathbb{K}}\newcommand{\bL}{\mathbb{L}}
+\newcommand{\bM}{\mathbb{M}}\newcommand{\bN}{\mathbb{N}}
+\newcommand{\bO}{\mathbb{O}}\newcommand{\bP}{\mathbb{P}}
+\newcommand{\bQ}{\mathbb{Q}}\newcommand{\RR}{\mathbb{R}}
+\newcommand{\bS}{\mathbb{S}}\newcommand{\bT}{\mathbb{T}}
+\newcommand{\bU}{\mathbb{U}}\newcommand{\bV}{\mathbb{V}}
+\newcommand{\bW}{\mathbb{W}}\newcommand{\bX}{\mathbb{X}}
+\newcommand{\bY}{\mathbb{Y}}\newcommand{\bZ}{\mathbb{Z}}
+
+\newcommand{\B}[1]{\mathbf{#1}}
+\newcommand{\BB}[1]{\mathbb{#1}}
+
+
+
+
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+
+\begin{document}
+
+
+
+\section*{Improved Fast Powering Algorithm}
+
+\begin{lstlisting}[language=Python, caption=Fast Powering Algorithm]
+      
+    @timer
+    def mod_pow_2(g, A, N):
+        """
+        Computes g**A (mod N), where g is the base, A is the exponent
+        and N is the modulus.
+    
+        parameters
+        ----------
+        g: int
+            The base
+        A: int 
+            The exponent
+        N: int
+            The modulus
+    
+        Returns 
+        -------
+        int: g**A (mod N)
+        """
+    
+        a, b = g, 1
+        while A > 0:
+            if (A-1)%2 == 0:
+                b = (b*a)%N
+            a, A = (a*a)%N, A//2
+        return b
+    
+        
+\end{lstlisting}
+
+\begin{proof}
+    \begin{enumerate}
+        \item \textbf{Initialization} The algorithm begins by initializing $a$ and $b$. 
+        That is, $a = g$ and $b = 1$. Here, $a$ is initially the base $g \mod N$, and $b$
+        is $b \equiv 1 \mod N$.
+        \item \textbf{Loop Invariant}
+        For each iteration, the algorithm mantains that $ba^A \equiv g^A \mod N$.
+
+        \item \textbf{While loop execution}
+        The algorithm enters a while loop and runs until $A \not > 0$.
+
+        For each iteration, we check the parity of $A$ using $A \equiv 1 (\mod 2)$. If $A$ is odd, 
+        then the least significan bit in the binary representation of $A$ is 1. In this case,
+        we update $b$ as $b = ba \mod N$. This ensure that $b$ accumulates the power of $g$ whenever
+        the current bit in the binary representation of $A$ is 1.
+
+
+        \item Next, we update $a$ to $a^2 \mod N$ regardless of whether $A$ is odd or even.  This prepares 
+        for the next iteration and squares the base for the next bit of $A$.
+
+        \item Also update $A$ as $A = floor(A/2) \mod N$. This shifts the bits in the binary representation of $A$
+        to the right.
+
+        \item \textbf{Termination}
+        
+        The loop continues until $A$ brcomes 0. In the end, $b \equiv g^A \mod N$.
+     \end{enumerate}
+\end{proof}
+
+\end{document}
+

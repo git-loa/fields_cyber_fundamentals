@@ -1,0 +1,154 @@
+\documentclass[12pt]{ut-thesis}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+%\usepackage{mathptmx}
+%\usepackage{apacite}
+%\usepackage{cite}
+\usepackage[numbers]{natbib}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage[usenames,dvipsnames]{color}
+
+%\usepackage{diagbox}
+\usepackage{rotating}
+\usepackage{chngcntr}
+\usepackage{multicol}
+\usepackage[bf,small,tableposition=top]{caption}
+\usepackage{subcaption}
+
+\usepackage{titlesec}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mathdots}
+\usepackage{amsfonts}
+\usepackage{tcolorbox}
+%\usepackage{extarrows}
+%\usepackage{moreverb}
+\usepackage[page]{totalcount}
+\usepackage{totcount}
+\regtotcounter{page}
+\usepackage[hang, flushmargin]{footmisc}
+\usepackage[colorlinks=true]{hyperref}
+%\usepackage[pdftex, hyperfootnotes=false, colorlinks=false]{hyperref}
+%\usepackage{footnotebackref}
+
+
+\usepackage{tikz-cd}
+
+\usepackage{fancyhdr}
+\setlength{\headheight}{13.2pt}
+
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+
+\fancyhf{}
+\fancyfoot[R]{(\thepage~ of \total{page})}
+\lfoot{Notes and solutions by Leonard O. Afeke \today}
+\chead{Cyber security Fundamentals | Mathematics (Exercise 1.1)}
+
+\DeclareMathOperator{\Frob}{Frob}
+\DeclareMathOperator{\plim}{\underleftarrow{\lim}^{i}}
+\DeclareMathOperator{\lm}{\underleftarrow{\lim}^{*}}
+
+\parskip=0.5\baselineskip
+\parindent=0pt
+\renewcommand{\baselinestretch}{1.5}
+
+%%%%%%%%%%%% Line spacesing codes %%%%%%%%%%%%
+\usepackage{setspace}
+%\singlespacing
+\onehalfspacing
+%\doublespacing
+%\setstretch{1.1}
+
+\usepackage{lineno} % This package together with lineno.sty numbers every line. Makes it easy for edditing.
+
+\newtheorem{thm}[subsection]{Theorem}
+% Rest is not in italics.
+%\theoremstyle{definition}
+\newtheorem{lem}[subsection]{Lemma}
+\newtheorem{cor}[subsection]{Corollary}
+\newtheorem{conj}[subsection]{Conjecture}
+\newtheorem{pro}[subsection]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{defn}[subsection]{Definition}
+\newtheorem{rem}[subsection]{Remark}
+\newtheorem{exa}[subsection]{Example}
+\newtheorem{con}[subsection]{Condition}
+
+\newcommand{\ora}[1]{{\xrightarrow{\hspace{0.2cm #1 \hspace{0.2cm}}}}}
+\newcommand{\ola}[1]{{\xleftarrow{#1}}}
+\newcommand{\hm}[3]{\mathrm{Hom}_{\mathcal{#1}}({#2}, {#3})}
+\newcommand{\dor}[1]{{\xrightarrow{#1}}}
+\newcommand{\sol}[1]{{\bf \emph{Solution}} #1}
+
+\newcommand{\cA}{\mathcal{A}}\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cE}{\mathcal{E}}\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cG}{\mathcal{G}}\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cI}{\mathcal{I}}\newcommand{\cJ}{\mathcal{J}}
+\newcommand{\cK}{\mathcal{K}}\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cM}{\mathcal{M}}\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cO}{\mathcal{O}}\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cQ}{\mathcal{Q}}\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cS}{\mathcal{S}}\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cU}{\mathcal{U}}\newcommand{\cV}{\mathcal{V}}
+\newcommand{\cW}{\mathcal{W}}\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cY}{\mathcal{Y}}\newcommand{\cZ}{\mathcal{Z}}
+
+\newcommand{\bA}{\mathbb{A}}\newcommand{\bB}{\mathbb{B}}
+\newcommand{\bC}{\mathbb{C}}\newcommand{\bD}{\mathbb{D}}
+\newcommand{\bE}{\mathbb{E}}\newcommand{\bF}{\mathbb{F}}
+\newcommand{\bG}{\mathbb{G}}\newcommand{\bH}{\mathbb{H}}
+\newcommand{\bI}{\mathbb{I}}\newcommand{\bJ}{\mathbb{J}}
+\newcommand{\bK}{\mathbb{K}}\newcommand{\bL}{\mathbb{L}}
+\newcommand{\bM}{\mathbb{M}}\newcommand{\bN}{\mathbb{N}}
+\newcommand{\bO}{\mathbb{O}}\newcommand{\bP}{\mathbb{P}}
+\newcommand{\bQ}{\mathbb{Q}}\newcommand{\RR}{\mathbb{R}}
+\newcommand{\bS}{\mathbb{S}}\newcommand{\bT}{\mathbb{T}}
+\newcommand{\bU}{\mathbb{U}}\newcommand{\bV}{\mathbb{V}}
+\newcommand{\bW}{\mathbb{W}}\newcommand{\bX}{\mathbb{X}}
+\newcommand{\bY}{\mathbb{Y}}\newcommand{\bZ}{\mathbb{Z}}
+
+
+\newcommand{\B}[1]{\mathbf{#1}}
+\newcommand{\BB}[1]{\mathbb{#1}}
+\begin{document}
+	\section*{Task: Complete exercise 1.12 on page 50}
+		To show that the provided algorithm computes the greatest common divisor \( g \) of the positive integers \( a \) and \( b \), along with integers \( u \) and \( v \) such that \( au + bv = g \), we can analyze the steps involved in the algorithm.
+		
+		\begin{enumerate}
+			\item Start with the initial values \( u = 1 \), \( g = a \), \( x = 0 \), and \( y = b \). 
+			
+			If $b=0$, then we raise a ZeroDivisionError, since division by zero is not allowed, and the program terminates. 
+			
+			\item The algorithm enters a while loop that only terminates when the value of y is zero. Inside the loop, we compute the quotient $q = g//b$ and remainder $t = g\%y$ such that $g = qy + t, 0\le t < y$. But this step is crucial because it follows the principle of the Euclidean algorithm which is used to compute the gcd. \\ 
+			
+			In addition, we compute \( s = u - qx \). This step updates \( s \) based on the previous values of \( u \) and \( x \).\\
+			
+			The algorithm updates \( u \) to \( x \) and \( g \) to \( y \). This prepares for the next iteration to find the $gcd$ of the new pair \( (y, t) \).\\
+			
+			The values of \( x \) and \( y \) are updated to \( s \) and \( t \), respectively. This ensures that we are always working with the most recent coefficients and remainders.\\
+			
+			\item The algorithm loops back to the second step until \( y \) becomes zero. 
+			At this point, we can compute \( v = \frac{g - au}{b} \). Since \( y = 0 \), then \( g = a \), which is the last non-zero remainder. Thus \( g = \text{gcd}(a, b) \). The equation \( au + bv = g \) simplifies to \( au + 0 = g \), confirming that \( u \) is a valid coefficient.\\
+						
+			The coefficients \( u \) and \( v \) correspond to the integers that satisfy \( au + bv = g \). 
+			
+		\end{enumerate}
+		By following these steps, the algorithm implements the Extended Euclidean Algorithm. It computes the $gcd$ of \( a \) and \( b \). It also finds integers \( u \) and \( v \) such that $$ au + bv = \text{gcd}(a, b). $$
+		
+		This shows that algorithm computes the greatest common divisor \( g \) of the positive integers \( a \) and \( b \), along with integers \( u \) and \( v \) such that \( au + bv = g \).
+		
+		
+		
+		
+		
+		
+		The private key used by Alice and Bob to decode their messages $c1 = 12849217045006222$ and $c2 = 6485880443666222$ is $k = 174385766$. The private key is obtained from the above algorithm. See the python function extended\_gcd(12849217045006222, 6485880443666222) in the python file. 	
+\end{document} 

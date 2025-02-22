@@ -1,0 +1,238 @@
+\documentclass[12pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+%\usepackage{mathptmx}
+%\usepackage{apacite}
+%\usepackage{cite}
+
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=20mm,
+ top=20mm,
+ }
+
+\usepackage[numbers]{natbib}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{listings}
+
+%\usepackage{diagbox}
+\usepackage{rotating}
+\usepackage{chngcntr}
+\usepackage{multicol}
+\usepackage[bf,small,tableposition=top]{caption}
+\usepackage{subcaption}
+
+\usepackage{titlesec}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mathdots}
+\usepackage{amsfonts}
+\usepackage{tcolorbox}
+%\usepackage{extarrows}
+%\usepackage{moreverb}
+\usepackage[page]{totalcount}
+\usepackage{totcount}
+\regtotcounter{page}
+\usepackage[hang, flushmargin]{footmisc}
+\usepackage[colorlinks=true]{hyperref}
+%\usepackage[pdftex, hyperfootnotes=false, colorlinks=false]{hyperref}
+%\usepackage{footnotebackref}
+
+
+\usepackage{tikz-cd}
+
+\usepackage{fancyhdr}
+\setlength{\headheight}{14.5pt}
+
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+
+\fancyhf{}
+\fancyfoot[R]{(\thepage~ of \total{page})}
+\lfoot{Authored by Leonard O. Afeke \today}
+\chead{Cyber security Fundamentals | Mathematics}
+
+\DeclareMathOperator{\Frob}{Frob}
+\DeclareMathOperator{\plim}{\underleftarrow{\lim}^{i}}
+\DeclareMathOperator{\lm}{\underleftarrow{\lim}^{*}}
+
+\parskip=0.5\baselineskip
+\parindent=0pt
+\renewcommand{\baselinestretch}{1.5}
+
+%%%%%%%%%%%% Line spacesing codes %%%%%%%%%%%%
+\usepackage{setspace}
+%\singlespacing
+\onehalfspacing
+%\doublespacing
+%\setstretch{1.1}
+
+\usepackage{lineno} % This package together with lineno.sty numbers every line. Makes it easy for edditing.
+
+\newtheorem{thm}[subsection]{Theorem}
+% Rest is not in italics.
+%\theoremstyle{definition}
+\newtheorem{lem}[subsection]{Lemma}
+\newtheorem{cor}[subsection]{Corollary}
+\newtheorem{conj}[subsection]{Conjecture}
+\newtheorem{pro}[subsection]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{defn}[subsection]{Definition}
+\newtheorem{rem}[subsection]{Remark}
+\newtheorem{exa}[subsection]{Example}
+\newtheorem{con}[subsection]{Condition}
+
+\newcommand{\ora}[1]{{\xrightarrow{\hspace{0.2cm #1 \hspace{0.2cm}}}}}
+\newcommand{\ola}[1]{{\xleftarrow{#1}}}
+\newcommand{\hm}[3]{\mathrm{Hom}_{\mathcal{#1}}({#2}, {#3})}
+\newcommand{\dor}[1]{{\xrightarrow{#1}}}
+\newcommand{\sol}[1]{{\bf \emph{Solution}} #1}
+
+\newcommand{\cA}{\mathcal{A}}\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cE}{\mathcal{E}}\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cG}{\mathcal{G}}\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cI}{\mathcal{I}}\newcommand{\cJ}{\mathcal{J}}
+\newcommand{\cK}{\mathcal{K}}\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cM}{\mathcal{M}}\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cO}{\mathcal{O}}\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cQ}{\mathcal{Q}}\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cS}{\mathcal{S}}\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cU}{\mathcal{U}}\newcommand{\cV}{\mathcal{V}}
+\newcommand{\cW}{\mathcal{W}}\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cY}{\mathcal{Y}}\newcommand{\cZ}{\mathcal{Z}}
+
+\newcommand{\bA}{\mathbb{A}}\newcommand{\bB}{\mathbb{B}}
+\newcommand{\bC}{\mathbb{C}}\newcommand{\bD}{\mathbb{D}}
+\newcommand{\bE}{\mathbb{E}}\newcommand{\bF}{\mathbb{F}}
+\newcommand{\bG}{\mathbb{G}}\newcommand{\bH}{\mathbb{H}}
+\newcommand{\bI}{\mathbb{I}}\newcommand{\bJ}{\mathbb{J}}
+\newcommand{\bK}{\mathbb{K}}\newcommand{\bL}{\mathbb{L}}
+\newcommand{\bM}{\mathbb{M}}\newcommand{\bN}{\mathbb{N}}
+\newcommand{\bO}{\mathbb{O}}\newcommand{\bP}{\mathbb{P}}
+\newcommand{\bQ}{\mathbb{Q}}\newcommand{\RR}{\mathbb{R}}
+\newcommand{\bS}{\mathbb{S}}\newcommand{\bT}{\mathbb{T}}
+\newcommand{\bU}{\mathbb{U}}\newcommand{\bV}{\mathbb{V}}
+\newcommand{\bW}{\mathbb{W}}\newcommand{\bX}{\mathbb{X}}
+\newcommand{\bY}{\mathbb{Y}}\newcommand{\bZ}{\mathbb{Z}}
+
+\newcommand{\B}[1]{\mathbf{#1}}
+\newcommand{\BB}[1]{\mathbb{#1}}
+
+
+
+
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+
+\begin{document}
+
+\section*{Exercise 4: Exercise 1.33 from the Course Text}
+\begin{pro}[Proposition 1.29]
+    Let $p$ be a prime and let $a$ be an integer not divisible by $p$. Suppose that
+    $a^n \equiv 1 (\mod p)$. Then the order of $a\mod p$ divides $n$. In particular, 
+    the order of $a$ divides $p-1$
+\end{pro}
+
+\begin{thm}(Primitive Root Theorem)
+Let $p$ a prime number. Then there exists an element $g \in F^*_p$ whose powers give 
+every element of $F^*_p$. i.e., $$F^*_p = \{1, g, g^2, g^3, \cdots, g^{p-2}\}.$$ Elements
+with this property are called \emph{primitive roots} of $F_p$ or \emph{generators} of $F^*_p$. 
+They are the elements $F^*_p$ having order $p-1$.
+\end{thm}
+
+\subsection*{Task}
+Let $p$ be a prime and let $q$ be a prime that divides $p-1$.
+\begin{enumerate}
+    \item Let $a\in F^*_p$ and let $b=a^{(p-1)/q}.$ Prove that either $b=1$ or else $b$ has order $q$.
+    (Recall that the order of $b$ is the smallest $k\ge 1$ such that $b^k = 1$ in $F^*_p$. \emph{Hint:}
+    Use Proposition 1.29.)
+
+    \item  Suppose that we want to find an element of $F^*_p$ of order $q$. Using (1), we can randomly
+    choose a value of $a \in F^*_p$ and check whether $b = a^{(p-1)/q}$ satisfies $b\ne 1.$ How likely
+    are we to succeed? in order words, compute the value of the ratio 
+    $$\#\{a \in F^*_p : a^{(p-1)/q} \ne 1\}/ \# F^*_p.$$
+    (\emph{Hint:} Use the Primitive Root Theorem) 
+\end{enumerate}
+
+\begin{proof}
+    \begin{enumerate}
+        \item Let $a\in F^*_p$ and let $b=a^{(p-1)/q}.$ Since $q$ is a prime that divides $p-1$, 
+        then $p-1 = kq$ for some integer $k$.  This means the order of every element $a$ in $F^*_p$
+        divides $p-1$. 
+
+        Since $b=a^{(p-1)/q},$ we have $b^q = (a^{(p-1)/q})^q = a^{p-1}$. By Fermat's Little Theorem,
+        we have $a^{p-1} = 1 \mod p.$ Thus $b^q = 1$. 
+
+        Now the order of $b$ must be a divisor of $q$  by Proposition 1.29, since $b^q  = 1$. The 
+        divisors of $q$ are $1$ and $q$. If the order is $1$, then $b$ must be 1 otherwise $q$ is 
+        the order of $b$.
+
+        \item The number of elements in $F^*_p$ with order $q$ is $\phi(q)$, where $\phi$ is the Euler
+        totient function. But $\phi(q)=q-1.$ Also, the number of of elements in $F^*_p$ is $p-1$. 
+        Therefore the likelihood of finding such an element is $\frac{q-1}{p-1}.$
+    \end{enumerate}
+\end{proof}
+
+\section*{Exercise 5: Exercise 1.35 from the Course Text}
+\begin{pro}
+    Let $p$ be a prime such that $q = \frac{1}{2}(p-1)$ is also prime. Suppose that g is an integer
+    satisfying 
+    \begin{itemize}
+        \item $g \not\equiv 0 (\mod p)$ 
+        \item $g \not\equiv \pm (\mod p)$ 
+        \item $g^q \not\equiv 1 (\mod p)$ 
+    \end{itemize}
+    Prove that $g$ is a pimitive root modulo p.
+\end{pro}
+\begin{proof}
+    By the Primitive Root Theorem, there exists an element in $F^*_p$ whose powers give every
+    element of $\mathbb{Z}^*_p$. By Proposition 0.1, the order of any $g \in \mathbb{Z}^*_p$
+    must divide $p-1 = 2q$, which is the order of $\mathbb{Z}^*_p$. The possible factors of $2q$
+    are $1, 2, q$ and $2q$.
+    
+    Since $g \not\equiv 0 (\mod p)$, then there is no zero elements in the
+    multiplicative group. In addition, since $g \not\equiv \pm (\mod p)$, then $g$ cannot have 
+    order 1 or 2. Finally, since $g^q \not\equiv 1 (\mod p)$, $g$ cannot have order $q$. 
+
+    So, the only possible oder is $p-1 = 2q$. Thus, g is  of order $2q$, and hence a primitive
+    root modulo $p$.
+
+    
+\end{proof}
+\end{document}
+
