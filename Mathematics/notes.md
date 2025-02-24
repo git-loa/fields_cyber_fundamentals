@@ -100,7 +100,7 @@ At each iteration, we perform the Euclidean division:
 # Irreducibility Tests in $F_p[T]$
 ***Theorem:*** Let $f(T) \in \mathbb{F}_p[T]$ have degree $d \ge 2$. Then $f(T)$ is irreducible if and only if $f(T)$ is not divisible by any nonconstant monic polynomial of degree at most d/2. 
 
-*Proof*
+***Proof***
 1. ***If $f(T)$ is irreducible, it is not divisible by any non-constant monic polynomial of degree at most $d/2$.*** 
 
     Assume $f(T)$ is irreducible, and suppose it divible by a monic polynomial $g(T)$ of degree at most d/2. Then we can write $f(T) = h(T)g(T)$ for some $h(T) \in \mathbb{F}_p[T]$.
@@ -117,6 +117,10 @@ At each iteration, we perform the Euclidean division:
     Since both $g(T)$ and $h(T)$ are non-constants, we have $1 \le \deg(g(T)) \le d/2$. 
     
     But this constradicts the assumptions that $f(T)$ is not divisible by a non-constant monic polynomial od degree at mot d/2.
+
+***Theorem*** If $\pi$ is irreducible in $\mathbb{F}_p[T]$ then $a^{N(\pi)-1} \equiv 1 \mod \pi$ for all $g \in \mathbb{F}_p[T]$ such that $(g,\pi) = 1$.
+
+***Proof***
 
 
 
