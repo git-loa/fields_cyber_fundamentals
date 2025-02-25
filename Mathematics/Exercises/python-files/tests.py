@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import unittest
 from CyberFoundations.exercise_package import *
 import Exercise_for_2_2 as ex22
