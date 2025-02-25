@@ -1,8 +1,14 @@
 #!/usr/bin/python3
-
+"""
+Exercise_for_2_2.py - This module  is a collection of 
+algebraic structures (Rings, Fields) for cryptography.
+"""
 import random
 
 class Ring:
+    """
+    A class representing a ring
+    """
     def __init__(self, addition, multiplication, unit, zero, additive_inverse):
 
         """
@@ -136,6 +142,9 @@ class Ring:
         return f"Ring(addition={self.add}, multiplication={self.mult}, unit={self.one}, zero={self.zero}, additive_inverse={self.add_inv})"
 
 class Field(Ring):
+    """
+    A class representing a field
+    """
     def __init__(self, addition, multiplication, unit, zero, additive_inverse, multiplicative_inverse):
         """
         A class to represent a field.
@@ -472,6 +481,9 @@ class Utility:
             return u%n # Returns u (mod n)
 
 class PrimeFiniteField(Field):
+    """
+    A class representing a prime finite field
+    """
     def __init__(self, prime):
         """
         Initialize a prime finite field of order prime.
@@ -545,6 +557,9 @@ class PrimeFiniteField(Field):
         return f"PrimeFiniteField(prime={self.prime})"
 
 class FiniteField(Field):
+    """
+    A class representing a finite field
+    """
     def __init__(self, prime, irr_poly):
         """
         Initialize a finite field F_p[x]/(f).
@@ -589,15 +604,27 @@ class FiniteField(Field):
 
 if __name__ == "__main__":
     def add(x, y):
+        """
+        Add two elements
+        """
         return x + y
-    
+  
     def mult(x, y):
+        """
+        Multiply two elements
+        """
         return x * y
     
     def add_inv(x):
+        """
+        Additive Inverse
+        """
         return -x
 
     def  mult_inv(x):
+        """
+        Multiplicative inverse
+        """
         if x == 0:
             raise ValueError("Cannot divide by zero")
         return 1/x
