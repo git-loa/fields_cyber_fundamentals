@@ -238,11 +238,9 @@ class Field(Ring):
             s, g, x, y = x[:], y[:], u[:], r[:]
             
         # Compute t = (g - a*s)//b
-        denominator = self.polynomial_addition(g,  self.scalar_multiply(self.polynomial_multiplication(a, s) , self.add_inv(self.one)))
-        t, _ = self.polynomial_division(denominator, b)
+        numerator = self.polynomial_addition(g,  self.scalar_multiply(self.polynomial_multiplication(a, s) , self.add_inv(self.one)))
+        t, _ = self.polynomial_division(numerator, b)
         return g, s, t 
-
-
 
     def __str__(self):
         return f"Field with unit: {self.one} and zero: {self.zero}"
@@ -251,7 +249,7 @@ class Field(Ring):
 
 class Utility:
     """
-    A utility class that provides operation on integers.
+    A utility class that provides operation on integers and polynomials(lists).
 
     Methods
     -------
@@ -479,7 +477,7 @@ class Utility:
             raise ValueError(f"Inverse does not exist because {a} and {n} are not coprimes (GCD = {gcd})") 
         else:
             return u%n # Returns u (mod n)
-
+        
 class PrimeFiniteField(Field):
     """
     A class representing a prime finite field
@@ -504,14 +502,83 @@ class PrimeFiniteField(Field):
             return (x*y) % self.prime
 
         def additive_inverse(x):
-            return (-x) 
+            return (-x) % self.prime
 
         def multiplicative_inverse(x):
             return Utility.mod_inv(x, self.prime)
 
         super().__init__(addition, multiplication, 1, 0, additive_inverse, multiplicative_inverse)
 
+    def generate_random_polynomials(self, degree:int, prime:int, count:int=40):
+        """
+        Generate a list of random non-zero polynomials with degrees less than the given degree.
+
+        Parameters:
+        degree (int): The maximum degree for the generated polynomials.
+        prime (int): The order of the finite field F_p.
+        count (int): The number of random polynomials to generate.
+
+        Returns:
+        list: A list of random non-zero polynomials.
+        """
+        polynomials = []
+        for _ in range(count):
+            poly = [random.randint(0, prime - 1) for _ in range(random.randint(1, degree))]
+            # Ensure the polynomial is non-zero
+            while len(poly) == 0 or (len(poly) == 1 and all(coeff == self.zero for coeff in poly)):
+                poly = [random.randint(0, prime - 1) for _ in range(random.randint(1, degree))]
+            polynomials.append(self.reduce(poly))
+        return polynomials
     
+    def reduce_mod_poly(self, poly, modulus_poly):
+        """
+        Reduce a polynomial modulo another polynomial.
+        """
+        _, remainder = self.polynomial_division(poly, modulus_poly)
+        return remainder
+    
+    def power_mod_poly(self, base_poly, expo, modulus_poly):
+        """
+        Perform modular exponentiation.
+        Compute base^exp % mod_poly
+        """
+        elmt = [self.one]
+        base = base_poly[:]
+        while expo > 0:
+            if expo % 2 == 1:
+                elmt = self.reduce_mod_poly(self.polynomial_multiplication(result, base), modulus_poly)
+            base = self.reduce_mod_poly(self.polynomial_multiplication(base, base), modulus_poly)
+            expo //= 2
+        return elmt
+
+    def miller_rabin_poly(self, poly, degree, base, prime):
+        N = prime**degree # N(poly) = p^deg(poly)
+        k, q = Utility.decompose(N) # N = (2^k)*q
+
+        base = self.power_mod_poly(base, k, poly)
+
+        # Test for composite failure
+        if base == [self.one] or base == [self.add_inv(self.one)]:
+            return "Test Fails"
+        
+        # Loop 0 throug k-1
+        for i in range(k):
+            if base == [self.add_inv(self.one)]:
+                return "Test Fails"
+            #Compute (base)^2 (mod poly)
+            base = self.power_mod_poly(base, 2, poly)
+
+        return "Composite"
+
+    def is_irreducible(self, poly, count=40):
+        rand_polys = self.generate_random_polynomials(degree=self.degree(poly), prime=self.prime, count=count)
+
+        for base in rand_polys:
+            if self.miller_rabin_poly(poly=poly, degree=self.degree(poly), base=base, prime=self.prime) == "Composite":
+                return False, [base]
+        return True, rand_polys
+        
+
     @staticmethod
     def is_prime(n: int, N: int = 40)-> bool:
         """
@@ -549,7 +616,6 @@ class PrimeFiniteField(Field):
                 return False
         return True
 
-
     def __str__(self):
         return f"A prime finite field PrimeFiniteField({self.prime})"
     
@@ -572,20 +638,28 @@ class FiniteField(Field):
         self.prime_field = PrimeFiniteField(prime)
         self.irr_poly = irr_poly
         
-        def addition(p, q):
-            return self.prime_field.polynomial_addition(p, q)
+        def addition(poly1, poly2):
+            return self.prime_field.polynomial_addition(poly1, poly2)
 
-        def multiplication(p, q):
-            # Your code here
-            pass
+        def multiplication(poly1, poly2):
+            product = self.prime_field.polynomial_multiplication(poly1,poly2)
+            return self.reduce_mod_irr_poly(product)
         
         def additive_inverse(x):
-            # Your code here
-            pass
-        
-        def multiplicative_inverse(x):
-            # Your code here. Hint: use the extended Euclidean algorithm for polynomials.
-            pass
+            return [self.prime_field.add_inv(coeff) for coeff in x]
+            
+        def multiplicative_inverse(poly):
+            """
+            Compute the multiplicative inverse of a plynomial in F_p[x]/(irr_poly) 
+            leveraging the extended euclidean algorithm: poly * poly_inv = 1 mod irr_poly 
+
+            """
+            reduced_poly = self.reduce_mod_irr_poly(poly)
+            gcd, poly_inv, _ = self.prime_field.extended_euclidean(reduced_poly, self.irr_poly)
+            if gcd != [self.prime_field.one]:
+                raise ValueError(f"Multiplicative inverse does not exist for {poly}")
+            return poly_inv # The inverse of poly. 
+
 
         super().__init__(addition, multiplication, 1, 0, additive_inverse, multiplicative_inverse)
 
@@ -679,5 +753,7 @@ if __name__ == "__main__":
     #print(pff.polynomial_multiplication(p1, p2))
     print(pff.polynomial_division(p1, p2))
     #print(pff.extended_euclidean(p2, p1))
+    print("\n")
+    print(pff.generate_random_polynomials(degree=4, prime=5, count=40))
 
     
