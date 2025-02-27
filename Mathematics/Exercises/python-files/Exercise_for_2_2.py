@@ -4,6 +4,8 @@ Exercise_for_2_2.py - This module  is a collection of
 algebraic structures (Rings, Fields) for cryptography.
 """
 import random
+from prettytable import PrettyTable, TableStyle
+
 
 class Ring:
     """
@@ -546,12 +548,15 @@ class PrimeFiniteField(Field):
         base = base_poly[:]
         while expo > 0:
             if expo % 2 == 1:
-                elmt = self.reduce_mod_poly(self.polynomial_multiplication(result, base), modulus_poly)
+                elmt = self.reduce_mod_poly(self.polynomial_multiplication(elmt, base), modulus_poly)
             base = self.reduce_mod_poly(self.polynomial_multiplication(base, base), modulus_poly)
             expo //= 2
         return elmt
 
     def miller_rabin_poly(self, poly, degree, base, prime):
+        """
+        Miller-Rabin test for deciding is a monic nonconstant polynomial f in  F_p[T] is irreducible
+        """
         N = prime**degree # N(poly) = p^deg(poly)
         k, q = Utility.decompose(N) # N = (2^k)*q
 
@@ -571,16 +576,19 @@ class PrimeFiniteField(Field):
         return "Composite"
 
     def is_irreducible(self, poly, count=40):
+        """
+        Test for probable irreducibility of a polynomial
+        """
         rand_polys = self.generate_random_polynomials(degree=self.degree(poly), prime=self.prime, count=count)
 
         for base in rand_polys:
             if self.miller_rabin_poly(poly=poly, degree=self.degree(poly), base=base, prime=self.prime) == "Composite":
-                return False, [base]
-        return True, rand_polys
+                return False
+        return True
         
 
     @staticmethod
-    def is_prime(n: int, N: int = 40)-> bool:
+    def is_prime(n: int, N:int = 40)-> bool:
         """
         Check if a number is prime.
 
@@ -675,7 +683,43 @@ class FiniteField(Field):
         """
         _, remainder = self.prime_field.polynomial_division(poly, self.irr_poly)
         return remainder
+    
+    def generate_field_elements(self):
+        """
+        Generate elements of the field The field F_p[x]/(irr_poly)
+        """
+        elements = []
+        number_of_elements = self.prime**self.degree(self.irr_poly)
+        for i in range(number_of_elements):
+            # Convert i to its base-p representation (coefficients of the polynomial)
+            poly = []
+            temp = i
+            while temp: # Termonates when temp is 0.
+                poly.append(temp % self.prime)
+                temp //= self.prime
+            elements.append(self.reduce_mod_irr_poly(poly))
+        return elements
+    
+    def multiplication_table(self):
+        """
+        Multiplication table for the ﬁeld
+        """
+        table = PrettyTable()
+        elements = self.generate_field_elements()
+        header = ['*']+[str(element) for element in elements]
 
+        table.field_names = header
+
+        # Generate the table
+        for row_elt in elements:
+            row = [str(row_elt)]
+            for col_elt in elements:
+                product = self.reduce_mod_irr_poly(self.prime_field.polynomial_multiplication(row_elt, col_elt))
+                row.append(str(product))
+            table.add_row(row=row, divider=True)
+        table.set_style(TableStyle.DOUBLE_BORDER)
+        print(table)
+            
 if __name__ == "__main__":
     def add(x, y):
         """
@@ -754,6 +798,11 @@ if __name__ == "__main__":
     print(pff.polynomial_division(p1, p2))
     #print(pff.extended_euclidean(p2, p1))
     print("\n")
-    print(pff.generate_random_polynomials(degree=4, prime=5, count=40))
+    print(pff.is_irreducible([1, 0, 0, 1, 0, 0, 0, 0, 0, 1]))
 
-    
+    pff = PrimeFiniteField(2)
+    print(pff.is_irreducible([1, 1, 0, 1]))
+
+    fm = FiniteField(2, [1, 1, 0, 1])
+    print(f"\n The field F_2[x]/(x^3 + x + 1) is: \n {fm.generate_field_elements()}\n")
+    fm.multiplication_table()
