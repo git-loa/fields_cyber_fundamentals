@@ -586,7 +586,6 @@ class PrimeFiniteField(Field):
                 return False
         return True
         
-
     @staticmethod
     def is_prime(n: int, N:int = 40)-> bool:
         """
@@ -668,7 +667,6 @@ class FiniteField(Field):
                 raise ValueError(f"Multiplicative inverse does not exist for {poly}")
             return poly_inv # The inverse of poly. 
 
-
         super().__init__(addition, multiplication, 1, 0, additive_inverse, multiplicative_inverse)
 
     def reduce_mod_irr_poly(self, poly):
@@ -694,7 +692,7 @@ class FiniteField(Field):
             # Convert i to its base-p representation (coefficients of the polynomial)
             poly = []
             temp = i
-            while temp: # Termonates when temp is 0.
+            while temp: # Terminates when temp is 0.
                 poly.append(temp % self.prime)
                 temp //= self.prime
             elements.append(self.reduce_mod_irr_poly(poly))
@@ -719,7 +717,53 @@ class FiniteField(Field):
             table.add_row(row=row, divider=True)
         table.set_style(TableStyle.DOUBLE_BORDER)
         print(table)
-            
+
+
+def byte_to_poly(byte: int) -> list:
+    """
+    Convert a byte to its polynomial representation.
+
+    Parameters
+    ----------
+    byte (int):
+        byte to be converted.
+
+    Returns
+    -------
+    list: Polynomial representation of the byte.
+    """
+    aes_field = FiniteField(2, [1, 1, 0, 1, 1, 0, 0, 0, 1])
+    poly = []
+
+    while byte:
+        poly.append(byte%2)
+        byte //= 2
+    return aes_field.reduce_mod_irr_poly(poly)
+
+def poly_to_byte(poly: list) -> int:
+    """
+    Convert a polynomial representation to a byte.
+
+    Parameters:
+    poly (list): Polynomial to be converted.
+
+    Returns:
+    int: Byte representation of the polynomial.
+    """
+    # Your code here
+    byte = 0
+    for i, bit in enumerate(poly):
+        byte |= bit << i
+    return byte
+
+def make_aes_mult_table():
+    """
+    Create a lookup table for AES multiplication.
+
+    Returns:
+    dict: Lookup table for AES multiplication.
+    """
+    # Your code here
 if __name__ == "__main__":
     def add(x, y):
         """
@@ -806,3 +850,6 @@ if __name__ == "__main__":
     fm = FiniteField(2, [1, 1, 0, 1])
     print(f"\n The field F_2[x]/(x^3 + x + 1) is: \n {fm.generate_field_elements()}\n")
     fm.multiplication_table()
+
+    print(byte_to_poly(83))
+    print(poly_to_byte([1, 1, 0, 0, 1, 0, 1]))
