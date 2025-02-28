@@ -734,10 +734,9 @@ def byte_to_poly(byte: int) -> list:
     """
     aes_field = FiniteField(2, [1, 1, 0, 1, 1, 0, 0, 0, 1])
     poly = []
-
     while byte:
-        poly.append(byte%2)
-        byte //= 2
+        poly.append(byte & 1)
+        byte >>= 1
     return aes_field.reduce_mod_irr_poly(poly)
 
 def poly_to_byte(poly: list) -> int:
@@ -763,7 +762,19 @@ def make_aes_mult_table():
     Returns:
     dict: Lookup table for AES multiplication.
     """
-    # Your code here
+
+    aes_mult = {}
+    aes_field = FiniteField(2, [1, 1, 0, 1, 1, 0, 0, 0, 1])
+    elements = aes_field.generate_field_elements()
+
+    # Generate the table
+    for row_elt in elements:
+        aes_mult[poly_to_byte(row_elt)] = {}
+        for col_elt in elements:
+            product = aes_field.reduce_mod_irr_poly(aes_field.prime_field.polynomial_multiplication(row_elt, col_elt))            
+            aes_mult[poly_to_byte(row_elt)][poly_to_byte(col_elt)] = poly_to_byte(product)
+    return aes_mult
+        
 if __name__ == "__main__":
     def add(x, y):
         """
@@ -853,3 +864,8 @@ if __name__ == "__main__":
 
     print(byte_to_poly(83))
     print(poly_to_byte([1, 1, 0, 0, 1, 0, 1]))
+
+    aes_mult = make_aes_mult_table()
+    assert aes_mult[83][202] == 1
+
+
