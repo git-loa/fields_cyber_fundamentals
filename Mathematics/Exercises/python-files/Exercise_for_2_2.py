@@ -4,15 +4,14 @@ Exercise_for_2_2.py - This module  is a collection of
 algebraic structures (Rings, Fields) for cryptography.
 """
 import random
-from prettytable import PrettyTable, TableStyle
 
 
 class Ring:
     """
     A class representing a ring
     """
-    def __init__(self, addition, multiplication, unit, zero, additive_inverse):
 
+    def __init__(self, addition, multiplication, unit, zero, additive_inverse):
         """
         A class to represent a ring.
 
@@ -20,13 +19,14 @@ class Ring:
         ----------
             addition: binary function representing addition operation
             multiplication: binary function representing multiplication operation
-            unit: the unit element for the ring. 
+            unit: the unit element for the ring.
             zero: the zero element for the ring
             additive_inverse: the additive inverse function for the ring
 
         Methods
         -------
-            reduce(poly): Remove every instance of the ring zero object from the end of a list (poly)
+            reduce(poly): Remove every instance of the ring zero object
+                        from the end of a list (poly)
             degree(poly): The degree of a polyomial
             polynomial_multiplication(poly1, poly2): 'Multiply' of two polynomials
             polynomial_addition(poly1, poly2): 'Add' two polynomials
@@ -38,7 +38,6 @@ class Ring:
         self.one = unit
         self.zero = zero
         self.add_inv = additive_inverse
-
 
     def reduce(self, poly: list) -> list:
         """
@@ -85,12 +84,15 @@ class Ring:
             list: Coefficients of the resulting polynomial after multiplication.
         """
         # Your code here
-        num_of_coeff = len(poly1) + len(poly2) - 1 # Number of coefficients afer multiplication.
-        result = [self.zero]*num_of_coeff
+        num_of_coeff = (
+            len(poly1) + len(poly2) - 1
+        )  # Number of coefficients afer multiplication.
+        result = [self.zero] * num_of_coeff
 
-        for i in range(len(poly1)):
-            for j in range(len(poly2)):
-                result[i+j] = self.add(result[i+j], self.mult(poly1[i], poly2[j]))
+        for i, _ in enumerate(poly1):
+            for j, _ in enumerate(poly2):
+                result[i + j] = self.add(result[i + j], self.mult(poly1[i], poly2[j]))
+
         return self.reduce(result)
 
     # Exercise 2: Polynomial Addition
@@ -109,14 +111,14 @@ class Ring:
         # Length of longer polynomial
         max_len = max(len(poly1), len(poly2))
 
-        #Extend shorter polynomial with zeros
-        poly1 = poly1 + [self.zero]*(max_len - len(poly1))
-        poly2 = poly2 + [self.zero]*(max_len - len(poly2))
+        # Extend shorter polynomial with zeros
+        poly1 = poly1 + [self.zero] * (max_len - len(poly1))
+        poly2 = poly2 + [self.zero] * (max_len - len(poly2))
 
-        #Add the corresponding coefficients
+        # Add the corresponding coefficients
         result = [self.add(poly1[i], poly2[i]) for i in range(max_len)]
         return self.reduce(result)
-        
+
     # Exercise 3: Scalar Multiplication
     def scalar_multiply(self, poly, scalar):
         """
@@ -130,41 +132,48 @@ class Ring:
         list: Coefficients of the resulting polynomial after scalar multiplication.
         """
         # Your code here
-
-        result = [self.zero]*len(poly)
-        for k in range(len(poly)):
+        result = [self.zero] * len(poly)
+        for k, _ in enumerate(poly):
             result[k] = self.mult(scalar, poly[k])
-
         return self.reduce(result)
 
     def __str__(self):
         return f"Ring with unit: {self.one} and zero: {self.zero}"
-    
+
     def __repr__(self):
-        return f"Ring(addition={self.add}, multiplication={self.mult}, unit={self.one}, zero={self.zero}, additive_inverse={self.add_inv})"
+        return f"Ring(addition={self.add}, multiplication={self.mult}, \
+            unit={self.one}, zero={self.zero}, additive_inverse={self.add_inv})"
+
 
 class Field(Ring):
     """
     A class representing a field
     """
-    def __init__(self, addition, multiplication, unit, zero, additive_inverse, multiplicative_inverse):
+
+    def __init__(
+        self,
+        addition,
+        multiplication,
+        unit,
+        zero,
+        additive_inverse,
+        multiplicative_inverse,
+    ):
         """
         A class to represent a field.
-
         Attributes
         ----------
             addition: binary function representing addition operation
             multiplication: binary function representing multiplication operation
-            unit: the unit element for the ring. 
+            unit: the unit element for the ring.
             zero: the zero element for the ring
             additive_inverse: the additive inverse function for the ring
             multiplicative_inverse: the multiplicative inverse function for the ring
 
         Methods
         -------
-            Extends the Ring class
             polynomial_division(poly1, poly2): Perform polynomial division.
-            extended_euclidean(poly1, poly2): Extended Euclidean Algorithm for polynomials over a field.
+            extended_euclidean(poly1, poly2): Extended Euclidean Algorithm for polynomials.
 
         """
         super().__init__(addition, multiplication, unit, zero, additive_inverse)
@@ -184,14 +193,14 @@ class Field(Ring):
         """
 
         # Your code here
-        if poly2 == [self.zero]*(self.degree(poly2) + 1):
+        if poly2 == [self.zero] * (self.degree(poly2) + 1):
             raise ValueError("Cannot divide by the zero polynomial")
 
         remainder = poly1[:]
-        quotient = [self.zero]*(self.degree(remainder) - self.degree(poly2) + 1)
-       
-        #print(self.degree(remainder))
-        
+        quotient = [self.zero] * (self.degree(remainder) - self.degree(poly2) + 1)
+
+        # print(self.degree(remainder))
+
         while self.degree(remainder) >= self.degree(poly2):
 
             # "Divide" lead coefficients
@@ -202,13 +211,15 @@ class Field(Ring):
             # Update quotient
             current_deg = self.degree(remainder) - self.degree(poly2)
             quotient[current_deg] = self.add(quotient[current_deg], div_coeffs)
-            
+
             # Update remainder
-            polx = [self.zero]*(self.degree(remainder) - self.degree(poly2) + 1)
+            polx = [self.zero] * (self.degree(remainder) - self.degree(poly2) + 1)
             polx[current_deg] = 1
             scaled_polx = self.scalar_multiply(polx, self.add_inv(div_coeffs))
-            remainder = self.polynomial_addition(remainder, self.polynomial_multiplication(scaled_polx, poly2))
-               
+            remainder = self.polynomial_addition(
+                remainder, self.polynomial_multiplication(scaled_polx, poly2)
+            )
+
         return self.reduce(quotient), self.reduce(remainder)
 
     # Exercise 5: Extended Euclidean Algorithm for Polynomials
@@ -225,29 +236,43 @@ class Field(Ring):
         """
         # Your code here
 
-        if a == [self.zero]*len(a) and b == [self.zero]*len(b):
+        if a == [self.zero] * len(a) and b == [self.zero] * len(b):
             raise ValueError("Both polynomials cannot be the zero polynomial.")
-        
-        #Initialize the coefficients
+
+        # Initialize the coefficients
         s, g, x, y = [self.one], a[:], [self.zero], b[:]
 
-        while y != [self.zero]*len(y):
-            q, r = self.polynomial_division(g, y) # a = bq + r, 0 <= deg(r) < deg(b) 
+        while y != [self.zero] * len(y):
+            q, r = self.polynomial_division(g, y)  # a = bq + r, 0 <= deg(r) < deg(b)
 
             # Updates
             # u = s - x * q
-            u = self.polynomial_addition(s,  self.scalar_multiply(self.polynomial_multiplication(x, q) , self.add_inv(self.one)))
+            u = self.polynomial_addition(
+                s,
+                self.scalar_multiply(
+                    self.polynomial_multiplication(x, q), self.add_inv(self.one)
+                ),
+            )
             s, g, x, y = x[:], y[:], u[:], r[:]
-            
+
         # Compute t = (g - a*s)//b
-        numerator = self.polynomial_addition(g,  self.scalar_multiply(self.polynomial_multiplication(a, s) , self.add_inv(self.one)))
+        numerator = self.polynomial_addition(
+            g,
+            self.scalar_multiply(
+                self.polynomial_multiplication(a, s), self.add_inv(self.one)
+            ),
+        )
         t, _ = self.polynomial_division(numerator, b)
-        return g, s, t 
+        return g, s, t
 
     def __str__(self):
         return f"Field with unit: {self.one} and zero: {self.zero}"
+
     def __repr__(self):
-        return f"Field(addition={self.add}, multiplication={self.mult}, unit={self.one}, zero={self.zero}, additive_inverse={self.add_inv}, multiplicative_inverse={self.mult_inv})"
+        return f"Field(addition={self.add}, multiplication={self.mult}, \
+            unit={self.one},zero={self.zero}, additive_inverse={self.add_inv}, \
+                multiplicative_inverse={self.mult_inv})"
+
 
 class Utility:
     """
@@ -263,6 +288,7 @@ class Utility:
         mod_inv(a, n): Computes the inverse modulo n of an integer a.
 
     """
+
     @staticmethod
     def gcd(a: int, b: int) -> int:
         """
@@ -282,25 +308,25 @@ class Utility:
         TypeError: Both parameters a and  b must be integers.
         """
         # Initialize a and b
-        
+
         # Check if inputs are integers
         if not isinstance(a, int) or not isinstance(b, int):
-            raise TypeError("Both a and b must be integers.") 
-        
-    # When both m and n are zero.
+            raise TypeError("Both a and b must be integers.")
+
+        # When both m and n are zero.
         if a == 0 and b == 0:
             return 0
-        
+
         a, b = abs(a), abs(b)
         while b != 0:
             a, b = b, a % b
 
         return a
-    
+
     @staticmethod
-    def extended_gcd(a: int, b: int)-> tuple[int, int, int]:
-        '''
-        Computes the gcd of a and b, and finds the coefficients 
+    def extended_gcd(a: int, b: int) -> tuple[int, int, int]:
+        """
+        Computes the gcd of a and b, and finds the coefficients
         u and v such that u a + v b = gcd(a,b)
 
         Parameters
@@ -329,62 +355,62 @@ class Utility:
         except ValueError as e:
             print(e)
 
-        '''
+        """
         # Check if inputs are integers
         if not isinstance(a, int) or not isinstance(b, int):
             raise TypeError("Both a and b must be integers.")
-        
+
         if a == 0:
-            return b, 0, 1 # gcd = b
-        
+            return b, 0, 1  # gcd = b
+
         if b == 0:
-            return a, 1, 0 # gcd = a
-        
+            return a, 1, 0  # gcd = a
+
         # When both m and n are zero.
         if a == 0 and b == 0:
-            return 0,0,0 # gcd is not well defined.
-        
-        # Initialize the variables u,g,x,y 
+            return 0, 0, 0  # gcd is not well defined.
+
+        # Initialize the variables u,g,x,y
         u, g, x, y = 1, abs(a), 0, abs(b)
-        
+
         # A while loop that runs until y == 0
         while y != 0:
-            q, t = g//y, g%y #quotient q and remainder t such that g = q * y + t
-            s = u - q * x # Compute s 
+            q, t = g // y, g % y  # quotient q and remainder t such that g = q * y + t
+            s = u - q * x  # Compute s
             u, g, x, y = x, y, s, t  # Update variables
-        
+
         v = (g - a * u) // b  # Calculate v
-        return g, u, v #return the gcd, and the coefficients
+        return g, u, v  # return the gcd, and the coefficients
 
     @staticmethod
-    def mod_pow_2(g, A, N):
+    def mod_pow_2(g, e, m):
         """
-        Computes g**A (mod N), where g is the base, A is the exponent
+        Computes g**A (mod N), where g is the base, e is the exponent
         and N is the modulus.
 
         parameters
         ----------
         g: int
             The base
-        A: int 
+        e: int
             The exponent
         N: int
             The modulus
 
-        Returns 
+        Returns
         -------
-        int: g**A (mod N)
+        int: g**A (mod m)
         """
 
         a, b = g, 1
-        while A > 0:
-            if (A-1)%2 == 0:
-                b = (b*a)%N
-            a, A = (a*a)%N, A//2
+        while e > 0:
+            if (e - 1) % 2 == 0:
+                b = (b * a) % m
+            a, e = (a * a) % m, e // 2
         return b
 
     @staticmethod
-    def decompose(n: int)-> tuple[int, int]:
+    def decompose(n: int) -> tuple[int, int]:
         """
         Decompose an integer as (2^k)q, where q is odd.
 
@@ -392,21 +418,21 @@ class Utility:
         ---------
         n: int
             Integer to decompose
-        
+
         Returns
         -------
         tuple[int, int]
             First int is the power k
             Second int is q.
         """
-        k=0
-        q = n-1
+        k = 0
+        q = n - 1
 
-        while q%2 == 0:
+        while q % 2 == 0:
             q //= 2
             k += 1
         return k, q
-    
+
     @staticmethod
     def miller_rabin(n: int, a: int) -> str:
         """
@@ -424,26 +450,26 @@ class Utility:
         str:
             "Composite" or "Test Fails"
         """
-        if n in (2,3):
+        if n in (2, 3):
             return "Test Fails"
-        #1. If n is even or 1 < gcd(a, n) < n, return composite
-        if n%2 == 0 or 1 < Utility.gcd(a,n) < n:
+        # 1. If n is even or 1 < gcd(a, n) < n, return composite
+        if n % 2 == 0 or 1 < Utility.gcd(a, n) < n:
             return "Composite"
-        
-        #2. Write n-1 as (2^k)*q where q is odd.
+
+        # 2. Write n-1 as (2^k)*q where q is odd.
         k, q = Utility.decompose(n)
 
-        #3. Set a = a^q mod n
-        a = Utility.mod_pow_2(a,q,n) # Returns a^q mod n.
+        # 3. Set a = a^q mod n
+        a = Utility.mod_pow_2(a, q, n)  # Returns a^q mod n.
 
-        #4.  Test for composite failure
-        if (a-1) % n == 0:
+        # 4.  Test for composite failure
+        if (a - 1) % n == 0:
             return "Test Fails"
-        
-        #5. Loop 0 through k-1
-        for i in range(k):
-            #6. Test for composite failure
-            if (a+1)%n == 0:
+
+        # 5. Loop 0 through k-1
+        for _ in range(k):
+            # 6. Test for composite failure
+            if (a + 1) % n == 0:
                 return "Test Fails"
             # Compute a^2 mod n and assign to a
             a = Utility.mod_pow_2(a, 2, n)
@@ -459,7 +485,7 @@ class Utility:
         ---------
         a: int
             Inter to finds it inverse
-        n: int 
+        n: int
             The modulus
 
         Returns
@@ -468,22 +494,29 @@ class Utility:
 
         Raises
         ------
-        ValueError(f"Inverse does not exist because {a} and {n} are not coprimes (GCD = {gcd})") 
+        ValueError(f"Inverse does not exist because {a} and {n} are not coprimes (GCD = {gcd})")
         """
 
         # Compute the gcd and the corresponding coefficients.
-        gcd, u, v = Utility.extended_gcd(a, n) # u*a + v*n = gcd
+        g, u, _ = Utility.extended_gcd(a, n)  # u*a + v*n = gcd
 
         # Check if gcd = 1
-        if gcd != 1:
-            raise ValueError(f"Inverse does not exist because {a} and {n} are not coprimes (GCD = {gcd})") 
-        else:
-            return u%n # Returns u (mod n)
-        
+        if g != 1:
+            raise ValueError(
+                f"Inverse does not exist because {a} and {n} are not coprimes (GCD = {g})"
+            )
+
+        return u % n  # Returns u (mod n)
+
+    def __str__(self):
+        return "Utility class"
+
+
 class PrimeFiniteField(Field):
     """
     A class representing a prime finite field
     """
+
     def __init__(self, prime):
         """
         Initialize a prime finite field of order prime.
@@ -493,15 +526,15 @@ class PrimeFiniteField(Field):
         """
         if not PrimeFiniteField.is_prime(prime):
             raise ValueError("Input is not a prime number.")
-        
+
         self.prime = prime
 
         # Define addition, multiplication, additive inverse, and multiplicative inverse functions
         def addition(x, y):
-            return (x+y) % self.prime
+            return (x + y) % self.prime
 
         def multiplication(x, y):
-            return (x*y) % self.prime
+            return (x * y) % self.prime
 
         def additive_inverse(x):
             return (-x) % self.prime
@@ -509,9 +542,11 @@ class PrimeFiniteField(Field):
         def multiplicative_inverse(x):
             return Utility.mod_inv(x, self.prime)
 
-        super().__init__(addition, multiplication, 1, 0, additive_inverse, multiplicative_inverse)
+        super().__init__(
+            addition, multiplication, 1, 0, additive_inverse, multiplicative_inverse
+        )
 
-    def generate_random_polynomials(self, degree:int, prime:int, count:int=40):
+    def generate_random_polynomials(self, degree: int, prime: int, count: int = 40):
         """
         Generate a list of random non-zero polynomials with degrees less than the given degree.
 
@@ -525,20 +560,27 @@ class PrimeFiniteField(Field):
         """
         polynomials = []
         for _ in range(count):
-            poly = [random.randint(0, prime - 1) for _ in range(random.randint(1, degree))]
+            poly = [
+                random.randint(0, prime - 1) for _ in range(random.randint(1, degree))
+            ]
             # Ensure the polynomial is non-zero
-            while len(poly) == 0 or (len(poly) == 1 and all(coeff == self.zero for coeff in poly)):
-                poly = [random.randint(0, prime - 1) for _ in range(random.randint(1, degree))]
+            while len(poly) == 0 or (
+                len(poly) == 1 and all(coeff == self.zero for coeff in poly)
+            ):
+                poly = [
+                    random.randint(0, prime - 1)
+                    for _ in range(random.randint(1, degree))
+                ]
             polynomials.append(self.reduce(poly))
         return polynomials
-    
+
     def reduce_mod_poly(self, poly, modulus_poly):
         """
         Reduce a polynomial modulo another polynomial.
         """
         _, remainder = self.polynomial_division(poly, modulus_poly)
         return remainder
-    
+
     def power_mod_poly(self, base_poly, expo, modulus_poly):
         """
         Perform modular exponentiation.
@@ -548,8 +590,12 @@ class PrimeFiniteField(Field):
         base = base_poly[:]
         while expo > 0:
             if expo % 2 == 1:
-                elmt = self.reduce_mod_poly(self.polynomial_multiplication(elmt, base), modulus_poly)
-            base = self.reduce_mod_poly(self.polynomial_multiplication(base, base), modulus_poly)
+                elmt = self.reduce_mod_poly(
+                    self.polynomial_multiplication(elmt, base), modulus_poly
+                )
+            base = self.reduce_mod_poly(
+                self.polynomial_multiplication(base, base), modulus_poly
+            )
             expo //= 2
         return elmt
 
@@ -557,20 +603,20 @@ class PrimeFiniteField(Field):
         """
         Miller-Rabin test for deciding is a monic nonconstant polynomial f in  F_p[T] is irreducible
         """
-        N = prime**degree # N(poly) = p^deg(poly)
-        k, q = Utility.decompose(N) # N = (2^k)*q
+        num_elts = prime**degree  # num_elts(poly) = p^deg(poly)
+        k, _ = Utility.decompose(num_elts)  # num_elts = (2^k)*q
 
         base = self.power_mod_poly(base, k, poly)
 
         # Test for composite failure
-        if base == [self.one] or base == [self.add_inv(self.one)]:
+        if base in [self.one, self.add_inv(self.one)]:
             return "Test Fails"
-        
+
         # Loop 0 throug k-1
-        for i in range(k):
+        for _ in range(k):
             if base == [self.add_inv(self.one)]:
                 return "Test Fails"
-            #Compute (base)^2 (mod poly)
+            # Compute (base)^2 (mod poly)
             base = self.power_mod_poly(base, 2, poly)
 
         return "Composite"
@@ -579,15 +625,22 @@ class PrimeFiniteField(Field):
         """
         Test for probable irreducibility of a polynomial
         """
-        rand_polys = self.generate_random_polynomials(degree=self.degree(poly), prime=self.prime, count=count)
+        rand_polys = self.generate_random_polynomials(
+            degree=self.degree(poly), prime=self.prime, count=count
+        )
 
         for base in rand_polys:
-            if self.miller_rabin_poly(poly=poly, degree=self.degree(poly), base=base, prime=self.prime) == "Composite":
+            if (
+                self.miller_rabin_poly(
+                    poly=poly, degree=self.degree(poly), base=base, prime=self.prime
+                )
+                == "Composite"
+            ):
                 return False
         return True
-        
+
     @staticmethod
-    def is_prime(n: int, N:int = 40)-> bool:
+    def is_prime(n: int, num_wit: int = 40) -> bool:
         """
         Check if a number is prime.
 
@@ -595,29 +648,29 @@ class PrimeFiniteField(Field):
         ---------
         n: int
             Integer to be checked..
-        N: int
+        num_wit: int
             The number of possible test witness to use (The number of compositeness tests to run).
-            
+
         Return
         ------
-        bool: 
+        bool:
             bool: True if n prime, False otherwise.
         """
-        if not isinstance(n, int) or not isinstance(N, int):
-            raise TypeError(f"Both numbers {n} and {N} must be integers.") 
-        
+        if not isinstance(n, int) or not isinstance(num_wit, int):
+            raise TypeError(f"Both numbers {n} and {num_wit} must be integers.")
+
         if n <= 0:
             raise ValueError(f"Input {n} is not a positive number")
-        
-        if N <= 0:
-            raise ValueError(f"Input {N} is not a positive number")
-        
+
+        if num_wit <= 0:
+            raise ValueError(f"Input {num_wit} is not a positive number")
+
         if n == 1:
             raise ValueError(f"Input {n} is too small.")
 
-        if n in (2,3):
+        if n in (2, 3):
             return True
-        test_witnesses = [random.randint(2, n-2) for _ in range(N)] 
+        test_witnesses = [random.randint(2, n - 2) for _ in range(num_wit)]
         for a in test_witnesses:
             if Utility.miller_rabin(n, a) == "Composite":
                 return False
@@ -625,14 +678,16 @@ class PrimeFiniteField(Field):
 
     def __str__(self):
         return f"A prime finite field PrimeFiniteField({self.prime})"
-    
+
     def __repr__(self):
         return f"PrimeFiniteField(prime={self.prime})"
+
 
 class FiniteField(Field):
     """
     A class representing a finite field
     """
+
     def __init__(self, prime, irr_poly):
         """
         Initialize a finite field F_p[x]/(f).
@@ -644,30 +699,34 @@ class FiniteField(Field):
         self.prime = prime
         self.prime_field = PrimeFiniteField(prime)
         self.irr_poly = irr_poly
-        
+
         def addition(poly1, poly2):
             return self.prime_field.polynomial_addition(poly1, poly2)
 
         def multiplication(poly1, poly2):
-            product = self.prime_field.polynomial_multiplication(poly1,poly2)
+            product = self.prime_field.polynomial_multiplication(poly1, poly2)
             return self.reduce_mod_irr_poly(product)
-        
+
         def additive_inverse(x):
             return [self.prime_field.add_inv(coeff) for coeff in x]
-            
+
         def multiplicative_inverse(poly):
             """
-            Compute the multiplicative inverse of a plynomial in F_p[x]/(irr_poly) 
-            leveraging the extended euclidean algorithm: poly * poly_inv = 1 mod irr_poly 
+            Compute the multiplicative inverse of a plynomial in F_p[x]/(irr_poly)
+            leveraging the extended euclidean algorithm: poly * poly_inv = 1 mod irr_poly
 
             """
             reduced_poly = self.reduce_mod_irr_poly(poly)
-            gcd, poly_inv, _ = self.prime_field.extended_euclidean(reduced_poly, self.irr_poly)
+            gcd, poly_inv, _ = self.prime_field.extended_euclidean(
+                reduced_poly, self.irr_poly
+            )
             if gcd != [self.prime_field.one]:
                 raise ValueError(f"Multiplicative inverse does not exist for {poly}")
-            return poly_inv # The inverse of poly. 
+            return poly_inv  # The inverse of poly.
 
-        super().__init__(addition, multiplication, 1, 0, additive_inverse, multiplicative_inverse)
+        super().__init__(
+            addition, multiplication, 1, 0, additive_inverse, multiplicative_inverse
+        )
 
     def reduce_mod_irr_poly(self, poly):
         """
@@ -681,47 +740,33 @@ class FiniteField(Field):
         """
         _, remainder = self.prime_field.polynomial_division(poly, self.irr_poly)
         return remainder
-    
+
     def generate_field_elements(self):
         """
         Generate elements of the field The field F_p[x]/(irr_poly)
         """
         elements = []
-        number_of_elements = self.prime**self.degree(self.irr_poly)
+        number_of_elements = self.prime ** self.degree(self.irr_poly)
         for i in range(number_of_elements):
             # Convert i to its base-p representation (coefficients of the polynomial)
             poly = []
             temp = i
-            while temp: # Terminates when temp is 0.
+            while temp:  # Terminates when temp is 0.
                 poly.append(temp % self.prime)
                 temp //= self.prime
             elements.append(self.reduce_mod_irr_poly(poly))
         return elements
-    
-    def multiplication_table(self):
-        """
-        Multiplication table for the ﬁeld
-        """
-        table = PrettyTable()
-        elements = self.generate_field_elements()
-        header = ['*']+[str(element) for element in elements]
 
-        table.field_names = header
+    def __str__(self):
+        return f"A finite field FiniteField({self.prime}, {self.irr_poly})"
 
-        # Generate the table
-        for row_elt in elements:
-            row = [str(row_elt)]
-            for col_elt in elements:
-                product = self.reduce_mod_irr_poly(self.prime_field.polynomial_multiplication(row_elt, col_elt))
-                row.append(str(product))
-            table.add_row(row=row, divider=True)
-        table.set_style(TableStyle.DOUBLE_BORDER)
-        print(table)
+    def __repr__(self):
+        return f"FiniteField(prime={self.prime}, irr_poly={self.irr_poly})"
 
 
 def byte_to_poly(byte: int) -> list:
     """
-    Convert a byte to its polynomial representation.
+    Convert a byte to its polynomial representation leveraging bitwise operation.
 
     Parameters
     ----------
@@ -739,9 +784,10 @@ def byte_to_poly(byte: int) -> list:
         byte >>= 1
     return aes_field.reduce_mod_irr_poly(poly)
 
+
 def poly_to_byte(poly: list) -> int:
     """
-    Convert a polynomial representation to a byte.
+    Convert a polynomial representation to a byte leveraging bitwise operation.
 
     Parameters:
     poly (list): Polynomial to be converted.
@@ -755,6 +801,7 @@ def poly_to_byte(poly: list) -> int:
         byte |= bit << i
     return byte
 
+
 def make_aes_mult_table():
     """
     Create a lookup table for AES multiplication.
@@ -763,109 +810,42 @@ def make_aes_mult_table():
     dict: Lookup table for AES multiplication.
     """
 
-    aes_mult = {}
     aes_field = FiniteField(2, [1, 1, 0, 1, 1, 0, 0, 0, 1])
     elements = aes_field.generate_field_elements()
+    mult_table = {}
 
     # Generate the table
     for row_elt in elements:
-        aes_mult[poly_to_byte(row_elt)] = {}
+        mult_table[poly_to_byte(row_elt)] = {}
         for col_elt in elements:
-            product = aes_field.reduce_mod_irr_poly(aes_field.prime_field.polynomial_multiplication(row_elt, col_elt))            
-            aes_mult[poly_to_byte(row_elt)][poly_to_byte(col_elt)] = poly_to_byte(product)
-    return aes_mult
-        
+            product = aes_field.reduce_mod_irr_poly(
+                aes_field.prime_field.polynomial_multiplication(row_elt, col_elt)
+            )
+            mult_table[poly_to_byte(row_elt)][poly_to_byte(col_elt)] = poly_to_byte(
+                product
+            )
+    return mult_table
+
+
 if __name__ == "__main__":
-    def add(x, y):
-        """
-        Add two elements
-        """
-        return x + y
-  
-    def mult(x, y):
-        """
-        Multiply two elements
-        """
-        return x * y
-    
-    def add_inv(x):
-        """
-        Additive Inverse
-        """
-        return -x
-
-    def  mult_inv(x):
-        """
-        Multiplicative inverse
-        """
-        if x == 0:
-            raise ValueError("Cannot divide by zero")
-        return 1/x
-
-
-    poly1 = [1,2]
-    poly2 = [4,5, 9]
-
-    ring = Ring(add, mult, 1, 0, add_inv)
-    print(f"Product of {poly1} and {poly2} is {ring.polynomial_multiplication(poly1, poly2)}\n")
-    print(f"Sum of {poly1} and {poly2} is {ring.polynomial_addition(poly1, poly2)}\n\n")
-
-
-    field = Field(add, mult, 1, 0, add_inv, mult_inv)
-    p1 = [1,-3,0,2]
-    p2 = [1,-1]
-    q, r = field.polynomial_division(p1, p2)
-    print(f"Quotient: {q}")
-    print(f"Remainder: {r}\n")
-
-    p1 = [7,0,0,0,2,1]
-    p2 = [-5,0,0,8]
-    q, r = field.polynomial_division(p1, p2)
-    print(f"Quotient: {q}")
-    print(f"Remainder: {r}\n")
-
-    p1 = [-1, 0, 1]
-    p2 = [1, 0, 0, 1]
-    g, s, t = field.extended_euclidean(p2, p1)
-    print(f"GCD({p1, p2}) = {g}")
-    print(f"Coefficients: s={s}, t = {t}\n")
-
-    p1 = [2,0,-3,1]
-    p2 = [-1,1]
-    g, s, t = field.extended_euclidean(p2, p1)
-    print(f"GCD({p1, p2}) = {g}")
-    print(f"Coefficients: s={s}, t = {t}\n")
-    
-    from CyberFoundations.exercise_package import mod_inv
-    field1 = Field(lambda x, y: (x+y)%13, lambda x, y: (x*y)%13, 1, 0, lambda x: -x, lambda x: mod_inv(x, 13))
-    p1 = [-1, 0,0,0,0,1]
-    p2 = [-3, 2, 0, 1]
-    g, s, t = field1.extended_euclidean(p2, p1)
-    print(f"GCD({p1, p2}) = {g}")
-    print(f"Coefficients: s={s}, t = {t}\n")
-
-    p1 = [-1, 0,0,0,0,1]
+    p1 = [-1, 0, 0, 0, 0, 1]
     p2 = [-3, 2, 0, 1]
 
     pff = PrimeFiniteField(13)
-    #print(pff.polynomial_addition(p2, p1))
-    #print(pff.polynomial_multiplication(p1, p2))
+    # print(pff.polynomial_addition(p2, p1))
+    # print(pff.polynomial_multiplication(p1, p2))
     print(pff.polynomial_division(p1, p2))
-    #print(pff.extended_euclidean(p2, p1))
+    # print(pff.extended_euclidean(p2, p1))
     print("\n")
     print(pff.is_irreducible([1, 0, 0, 1, 0, 0, 0, 0, 0, 1]))
 
     pff = PrimeFiniteField(2)
-    print(pff.is_irreducible([1, 1, 0, 1]))
+    print(pff.is_irreducible([1, 1, 0, 1, 1, 0, 0, 0, 1]))
 
     fm = FiniteField(2, [1, 1, 0, 1])
     print(f"\n The field F_2[x]/(x^3 + x + 1) is: \n {fm.generate_field_elements()}\n")
-    fm.multiplication_table()
-
-    print(byte_to_poly(83))
-    print(poly_to_byte([1, 1, 0, 0, 1, 0, 1]))
+    polystobytes = [poly_to_byte(p) for _, p in enumerate(fm.generate_field_elements())]
+    print(f"Bytes representation for F_2[x]/(x^3 + x + 1) is: \n {polystobytes}\n")
 
     aes_mult = make_aes_mult_table()
     assert aes_mult[83][202] == 1
-
-
