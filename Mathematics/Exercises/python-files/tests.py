@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+"""
+Testing module
+"""
 
 import unittest
 import CyberFoundations.exercise_package as ep
@@ -51,7 +54,9 @@ class TestExOneFuncs(unittest.TestCase):
         self.assertEqual(
             ep.break_rsa(1151384497, 2017780463, 33191, 1154218329), 1792339949
         )  # Must pass
-        # self.assertEqual(break_rsa(1151384497, 2017780463, 33191, 1154218329), 179233994) # Must fail.
+
+        # Must fail
+        # self.assertEqual(break_rsa(1151384497, 2017780463, 33191, 1154218329), 179233994).
 
 
 class TestExTwoFuncs(unittest.TestCase):
@@ -120,7 +125,7 @@ class TestExTwoFuncs(unittest.TestCase):
 
     def test_extended_euclidean(self):
         """
-        Test the function extended_euclidean
+        Test the function extended_euclidean for polynomials
         """
         self.assertEqual(
             TestExTwoFuncs.field1.extended_euclidean(

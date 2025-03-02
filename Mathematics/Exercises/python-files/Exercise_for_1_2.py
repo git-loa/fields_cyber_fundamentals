@@ -167,9 +167,11 @@ def mod_pow(a: int, e: int, n: int) -> int:
         if m == 0:
             return 0
         bin_list = []
+
+        # Use bitwise operation to fine binary representation
         while m > 0:
-            bin_list.append(m % 2)
-            m = m // 2
+            bin_list.append(m & 1)
+            m >>= 1
         return bin_list
 
     bin_list = binary_epansion(e)  # binary representation of e as a list
@@ -296,7 +298,7 @@ def fast_phi(n: int):
 if __name__ == "__main__":
 
     ## Start of testing exercise 1.2.1
-    print("\n------ Start of testing exercise 1.2.1\n")
+    print("\n-- Start of testing exercise 1.2.1 --\n")
     a0, n0 = 21454362362356235, 34623572343523462537647
     a1, n1 = 7, 24
     a2, n2 = 4, 5
@@ -347,31 +349,29 @@ if __name__ == "__main__":
         print(f"The inverse of {a4} modulo {n4} is {INV4}")
     except ValueError as e:
         print(e)
-    print("\n------ End of testing exercise 1.2.1\n\n")
+    print("\n-- End of testing exercise 1.2.1 --\n\n")
     ## End of testing exercise 1.2.1
 
     ## Start of testing exercise 1.2.2
-    print("\n------ Start of testing exercise 1.2.2\n")
+    print("\n-- Start of testing exercise 1.2.2 --\n")
     print(f"mod_pow(3, 218, 1000) = {mod_pow(3,218, 1000)}\n")
     print(f"mod_pow(17,183, 256) = {mod_pow(17,183, 256)}\n")
     print(f"mod_pow(2, 477, 256) = {mod_pow(2, 477, 1000)}\n")
     print(f"mod_pow(11, 507, 1237) = {mod_pow(11, 507, 1237)}\n")
-
-    print("\n------ End of testing exercise 1.2.2\n\n")
+    print("\n-- End of testing exercise 1.2.2 --\n\n")
     ## End of testing exercise 1.2.2
 
     ## Start of testing exercise 1.2.3
-    print("\n------ Start of testing exercise 1.2.3\n")
+    print("\n-- Start of testing exercise 1.2.3 --\n")
     print(f"mod_pow_2(3, 218, 1000) = {mod_pow_2(3,218, 1000)}\n")
     print(f"mod_pow_2(17,183, 256) = {mod_pow_2(17,183, 256)}\n")
     print(f"mod_pow_2(2, 477, 256) = {mod_pow_2(2, 477, 1000)}\n")
     print(f"mod_pow_2(11, 507, 1237) = {mod_pow_2(11, 507, 1237)}\n")
-
-    print("\n------ End of testing exercise 1.2.3\n\n")
+    print("\n-- End of testing exercise 1.2.3 --\n\n")
     ## End of testing exercise 1.2.3
 
     ## Start of testing exercise 1.2.4
-    print("\n------ Start of testing exercise 1.2.4\n")
+    print("\n-- Start of testing exercise 1.2.4 --\n")
     print(f"Euler totient of 24 is phi(24) = {phi(24)}\n")
     print(f"Euler totient of 500 is phi(500) = {phi(500)}\n")
     print(f"Euler totient of 4567 is phi(4567) = {phi(4567)}\n\n")
@@ -379,5 +379,5 @@ if __name__ == "__main__":
     print(f"Euler totient of 24 is fast_phi(24) = {fast_phi(24)}\n")
     print(f"Euler totient of 500 is fast_phi(500) = {fast_phi(500)}\n")
     print(f"Euler totient of 4567 is fast_phi(4567) = {fast_phi(4567)}")
-    print("\n------ End of testing exercise 1.2.4\n\n")
+    print("\n-- End of testing exercise 1.2.4 --\n\n")
     ## End of testing exercise 1.2.4

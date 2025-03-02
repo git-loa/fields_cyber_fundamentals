@@ -72,7 +72,7 @@ class Ring:
             return len(poly) - 1
 
     # Exercise 1: Polynomial Multiplication
-    def polynomial_multiplication(self, poly1, poly2):
+    def polynomial_multiplication(self, poly1: list, poly2: list) -> list:
         """
         Perform polynomial multiplication.
 
@@ -96,7 +96,7 @@ class Ring:
         return self.reduce(result)
 
     # Exercise 2: Polynomial Addition
-    def polynomial_addition(self, poly1, poly2):
+    def polynomial_addition(self, poly1: list, poly2: list) -> list:
         """
         Perform polynomial addition.
 
@@ -120,7 +120,7 @@ class Ring:
         return self.reduce(result)
 
     # Exercise 3: Scalar Multiplication
-    def scalar_multiply(self, poly, scalar):
+    def scalar_multiply(self, poly: list, scalar) -> list:
         """
         Perform scalar multiplication of a polynomial by a ring element.
 
@@ -180,7 +180,7 @@ class Field(Ring):
         self.mult_inv = multiplicative_inverse
 
     # Exercise 4: Polynomial Division
-    def polynomial_division(self, poly1, poly2):
+    def polynomial_division(self, poly1: list, poly2: list) -> tuple[list, list]:
         """
         Perform polynomial division.
 
@@ -189,7 +189,8 @@ class Field(Ring):
         poly2 (list): Coefficients of the divisor polynomial.
 
         Returns:
-        tuple: Quotient and remainder polynomials such that poly1 = quotient * poly2 + remainder.
+        tuple[list, list]: Quotient and remainder polynomials such 
+        that poly1 = quotient * poly2 + remainder.
         """
 
         # Your code here
@@ -201,11 +202,14 @@ class Field(Ring):
 
         # print(self.degree(remainder))
 
+        # Division algorithm
         while self.degree(remainder) >= self.degree(poly2):
 
-            # "Divide" lead coefficients
+            # "Divide" the lead coefficients
             coeff_remainder = remainder[-1]
             coeff_divisor = poly2[-1]
+
+            # coeff_remainder / coeff_divisor
             div_coeffs = self.mult(coeff_remainder, self.mult_inv(coeff_divisor))
 
             # Update quotient
@@ -223,7 +227,7 @@ class Field(Ring):
         return self.reduce(quotient), self.reduce(remainder)
 
     # Exercise 5: Extended Euclidean Algorithm for Polynomials
-    def extended_euclidean(self, a, b):
+    def extended_euclidean(self, a: list, b: list) -> tuple[list, list, list]:
         """
         Extended Euclidean Algorithm for polynomials over a field.
 
@@ -232,7 +236,10 @@ class Field(Ring):
         b (list): Coefficients of the second polynomial.
 
         Returns:
-        tuple: (gcd, s, t) such that gcd = a * s + b * t.
+        tuple[list, list, list]: A tuple of lists (gcd, s, t) such that gcd = a * s + b * t.
+            - gcd(list): Coefficients of the gcd
+            - s(list): Coefficients of the polynomail s
+            - t(list): Coefficients of the polynomial t.
         """
         # Your code here
 
@@ -546,7 +553,9 @@ class PrimeFiniteField(Field):
             addition, multiplication, 1, 0, additive_inverse, multiplicative_inverse
         )
 
-    def generate_random_polynomials(self, degree: int, prime: int, count: int = 40):
+    def generate_random_polynomials(
+        self, degree: int, prime: int, count: int = 40
+    ) -> list:
         """
         Generate a list of random non-zero polynomials with degrees less than the given degree.
 
@@ -556,7 +565,7 @@ class PrimeFiniteField(Field):
         count (int): The number of random polynomials to generate.
 
         Returns:
-        list: A list of random non-zero polynomials.
+        list: A list of lists(random non-zero polynomials).
         """
         polynomials = []
         for _ in range(count):
@@ -571,7 +580,7 @@ class PrimeFiniteField(Field):
                     random.randint(0, prime - 1)
                     for _ in range(random.randint(1, degree))
                 ]
-            polynomials.append(self.reduce(poly))
+            polynomials.append(self.reduce(poly))  # Strip off all trailing Ring zeros.
         return polynomials
 
     def reduce_mod_poly(self, poly, modulus_poly):
@@ -581,10 +590,19 @@ class PrimeFiniteField(Field):
         _, remainder = self.polynomial_division(poly, modulus_poly)
         return remainder
 
-    def power_mod_poly(self, base_poly, expo, modulus_poly):
+    def power_mod_poly(self, base_poly: list, expo: int, modulus_poly: list) -> list:
         """
-        Perform modular exponentiation.
-        Compute base^exp % mod_poly
+        Perform modular exponentiation. Compute base^expo % mod_poly
+
+        Parameters
+        ----------
+        base_poly(list): Coefficients of the base polynomial.
+        expo(int): Exponent
+        modulus_poly(list): Coefficients of the modulus polynomial.
+
+        Returns
+        -------
+        list: Coefficients of the resultant polynomial.
         """
         elmt = [self.one]
         base = base_poly[:]
@@ -599,9 +617,20 @@ class PrimeFiniteField(Field):
             expo //= 2
         return elmt
 
-    def miller_rabin_poly(self, poly, degree, base, prime):
+    def miller_rabin_poly(self, poly: list, degree: int, base: list, prime: int) -> str:
         """
-        Miller-Rabin test for deciding is a monic nonconstant polynomial f in  F_p[T] is irreducible
+        Miller-Rabin test for deciding a monic nonconstant polynomial in  F_p[T] is irreducible.
+
+        Parameters
+        ----------
+        poly(list): Coefficients of the polynomial.
+        degree(int): The degree of the plynomial.
+        base(list): Coefficient of base polynomial.
+        prime(int): A prime number.
+
+        Returns
+        -------
+        str: 'Composite' or 'Test Fails'
         """
         num_elts = prime**degree  # num_elts(poly) = p^deg(poly)
         k, _ = Utility.decompose(num_elts)  # num_elts = (2^k)*q
@@ -609,7 +638,7 @@ class PrimeFiniteField(Field):
         base = self.power_mod_poly(base, k, poly)
 
         # Test for composite failure
-        if base in [self.one, self.add_inv(self.one)]:
+        if base in [[self.one], [self.add_inv(self.one)]]:
             return "Test Fails"
 
         # Loop 0 throug k-1
@@ -621,9 +650,18 @@ class PrimeFiniteField(Field):
 
         return "Composite"
 
-    def is_irreducible(self, poly, count=40):
+    def is_irreducible(self, poly: list, count: int = 40) -> bool:
         """
         Test for probable irreducibility of a polynomial
+
+        Parameters
+        ----------
+        poly(list): Coefficients of the polynomial
+        count(int): Nuber of random polynomials to serve as Miller-Rabin witnesses
+
+        Returns
+        -------
+        bool: True for Probably irreducible poly. Otherwise, False.
         """
         rand_polys = self.generate_random_polynomials(
             degree=self.degree(poly), prime=self.prime, count=count
@@ -636,8 +674,8 @@ class PrimeFiniteField(Field):
                 )
                 == "Composite"
             ):
-                return False
-        return True
+                return False  # reducible if composite
+        return True  # Probably irreducible
 
     @staticmethod
     def is_prime(n: int, num_wit: int = 40) -> bool:
@@ -688,7 +726,7 @@ class FiniteField(Field):
     A class representing a finite field
     """
 
-    def __init__(self, prime, irr_poly):
+    def __init__(self, prime: int, irr_poly: list):
         """
         Initialize a finite field F_p[x]/(f).
 
@@ -700,17 +738,17 @@ class FiniteField(Field):
         self.prime_field = PrimeFiniteField(prime)
         self.irr_poly = irr_poly
 
-        def addition(poly1, poly2):
+        def addition(poly1: list, poly2: list):
             return self.prime_field.polynomial_addition(poly1, poly2)
 
-        def multiplication(poly1, poly2):
+        def multiplication(poly1: list, poly2: list):
             product = self.prime_field.polynomial_multiplication(poly1, poly2)
             return self.reduce_mod_irr_poly(product)
 
         def additive_inverse(x):
             return [self.prime_field.add_inv(coeff) for coeff in x]
 
-        def multiplicative_inverse(poly):
+        def multiplicative_inverse(poly: list):
             """
             Compute the multiplicative inverse of a plynomial in F_p[x]/(irr_poly)
             leveraging the extended euclidean algorithm: poly * poly_inv = 1 mod irr_poly
@@ -728,7 +766,7 @@ class FiniteField(Field):
             addition, multiplication, 1, 0, additive_inverse, multiplicative_inverse
         )
 
-    def reduce_mod_irr_poly(self, poly):
+    def reduce_mod_irr_poly(self, poly: list) -> list:
         """
         Reduce a polynomial modulo the irreducible polynomial.
 
@@ -741,9 +779,11 @@ class FiniteField(Field):
         _, remainder = self.prime_field.polynomial_division(poly, self.irr_poly)
         return remainder
 
-    def generate_field_elements(self):
+    def generate_field_elements(self) -> list:
         """
         Generate elements of the field The field F_p[x]/(irr_poly)
+
+        Returns: A list of lists.
         """
         elements = []
         number_of_elements = self.prime ** self.degree(self.irr_poly)
@@ -755,7 +795,7 @@ class FiniteField(Field):
                 poly.append(temp % self.prime)
                 temp //= self.prime
             elements.append(self.reduce_mod_irr_poly(poly))
-        return elements
+        return elements  # List of lists
 
     def __str__(self):
         return f"A finite field FiniteField({self.prime}, {self.irr_poly})"
@@ -775,10 +815,12 @@ def byte_to_poly(byte: int) -> list:
 
     Returns
     -------
-    list: Polynomial representation of the byte.
+    poly(list): Coefficients of the polynomial representation of the byte.
     """
     aes_field = FiniteField(2, [1, 1, 0, 1, 1, 0, 0, 0, 1])
     poly = []
+
+    # Use bitwise operation to fine binary representation
     while byte:
         poly.append(byte & 1)
         byte >>= 1
@@ -790,7 +832,7 @@ def poly_to_byte(poly: list) -> int:
     Convert a polynomial representation to a byte leveraging bitwise operation.
 
     Parameters:
-    poly (list): Polynomial to be converted.
+    poly (list): Coefficients of the polynomial to be converted.
 
     Returns:
     int: Byte representation of the polynomial.
@@ -841,6 +883,7 @@ if __name__ == "__main__":
 
     pff = PrimeFiniteField(2)
     print(pff.is_irreducible([1, 1, 0, 1, 1, 0, 0, 0, 1]))
+    print(pff.is_irreducible([1, 1, 0, 1]))
 
     fm = FiniteField(2, [1, 1, 0, 1])
     print(f"\n The field F_2[x]/(x^3 + x + 1) is: \n {fm.generate_field_elements()}\n")
