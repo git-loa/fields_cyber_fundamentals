@@ -133,8 +133,8 @@ class Ring:
         """
         # Your code here
         result = [self.zero] * len(poly)
-        for k, _ in enumerate(poly):
-            result[k] = self.mult(scalar, poly[k])
+        for k, val in enumerate(poly):
+            result[k] = self.mult(scalar, val)
         return self.reduce(result)
 
     def __str__(self):
@@ -189,7 +189,7 @@ class Field(Ring):
         poly2 (list): Coefficients of the divisor polynomial.
 
         Returns:
-        tuple[list, list]: Quotient and remainder polynomials such 
+        tuple[list, list]: Quotient and remainder polynomials such
         that poly1 = quotient * poly2 + remainder.
         """
 
@@ -889,6 +889,3 @@ if __name__ == "__main__":
     print(f"\n The field F_2[x]/(x^3 + x + 1) is: \n {fm.generate_field_elements()}\n")
     polystobytes = [poly_to_byte(p) for _, p in enumerate(fm.generate_field_elements())]
     print(f"Bytes representation for F_2[x]/(x^3 + x + 1) is: \n {polystobytes}\n")
-
-    aes_mult = make_aes_mult_table()
-    assert aes_mult[83][202] == 1

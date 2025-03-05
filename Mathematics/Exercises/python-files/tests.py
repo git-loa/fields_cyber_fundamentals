@@ -5,8 +5,8 @@ Testing module
 
 import unittest
 import CyberFoundations.exercise_package as ep
-import Exercise_for_2_2 as ex22
-from Exercise_for_2_1 import group_pow
+import exercise_for_2_2 as ex22
+from exercise_for_2_1 import group_pow
 
 
 # Exercise 1 functions

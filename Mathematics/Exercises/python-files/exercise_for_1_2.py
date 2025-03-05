@@ -168,15 +168,17 @@ def mod_pow(a: int, e: int, n: int) -> int:
             return 0
         bin_list = []
 
-        # Use bitwise operation to fine binary representation
+        # Use bitwise operation to find the binary representation
         while m > 0:
             bin_list.append(m & 1)
             m >>= 1
         return bin_list
 
     bin_list = binary_epansion(e)  # binary representation of e as a list
+
+    # Compute a^(2^r) (mod n)
     pow_a_mod_n = [
-        (a ** (2**r)) % n for r in range(len(bin_list))
+        (a ** (2**r)) % n for r, _ in enumerate(bin_list)
     ]  # compute the powers of a modulo n
 
     prod = 1
@@ -196,21 +198,21 @@ def mod_pow(a: int, e: int, n: int) -> int:
 # @timer
 def mod_pow_2(g, e, m):
     """
-    Computes g**A (mod N), where g is the base, A is the exponent
+    Computes g**e (mod m), where g is the base, e is the exponent
     and N is the modulus.
 
     parameters
     ----------
     g: int
         The base
-    A: int
+    e: int
         The exponent
-    N: int
+    m: int
         The modulus
 
     Returns
     -------
-    int: g**A (mod N)
+    int: g**e (mod m)
     """
 
     a, b = g, 1
@@ -258,7 +260,7 @@ def phi(n: int):
     return count
 
 
-@timer
+# @timer
 def fast_phi(n: int):
     """
     Compute the Euler totient of using prime factorization technique
@@ -276,6 +278,7 @@ def fast_phi(n: int):
     count = n  # Initialze count as n
     p = 2  # Start with the smallest prime
 
+    # Compute n(1-1/p1)...(1-1/pk) -- p1, ... pk are prime numbers
     # Loop though potential prime factors of n starting with p =2
     while p * p <= n:  # Using the square root technique
         # Check if p is a factor of n
@@ -306,8 +309,7 @@ if __name__ == "__main__":
     a4, n4 = 4, 8
 
     # Testing function for
-    # a = 21454362362356235
-    # n = 34623572343523462537647
+    # a0, n0 = 21454362362356235, 34623572343523462537647
     try:
         INV0 = mod_inv(a0, n0)
         print(f"The inverse of {a0} modulo {n0} is {INV0}")
@@ -315,8 +317,7 @@ if __name__ == "__main__":
         print(e)
 
     # Testing function for
-    # a1 = 21454362362356235
-    # n1 = 34623572343523462537647
+    # a1, n1 = 7, 24
     try:
         INV1 = mod_inv(a1, n1)
         print(f"The inverse of {a1} modulo {n1} is {INV1}")
@@ -324,8 +325,7 @@ if __name__ == "__main__":
         print(e)
 
     # Testing function for
-    # a2 = 21454362362356235
-    # n2 = 34623572343523462537647
+    # a2, n2 = 4, 5
     try:
         INV2 = mod_inv(a2, n2)
         print(f"The inverse of {a2} modulo {n2} is {INV2}")
@@ -333,17 +333,15 @@ if __name__ == "__main__":
         print(e)
 
     # Testing function for
-    # a3 = 21454362362356235
-    # n3 = 34623572343523462537647
+    #  a3, n3 = 3, 5
     try:
         INV3 = mod_inv(a3, n3)
-        print(f"The inverse of {a3} modulo {n1} is {INV3}")
+        print(f"The inverse of {a3} modulo {n3} is {INV3}")
     except ValueError as e:
         print(e)
 
     # Testing function for
-    # a4 = 21454362362356235
-    # n4 = 34623572343523462537647
+    # a4, n4 = 4, 8
     try:
         INV4 = mod_inv(a4, n4)
         print(f"The inverse of {a4} modulo {n4} is {INV4}")

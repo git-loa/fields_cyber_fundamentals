@@ -13,7 +13,7 @@ from CyberFoundations import exercise_package as pk
 
 def rsa_keygen(n: int, max_iteration: int = 1000) -> tuple[int, int, int]:
     """
-    RSA Key Generation: Generates RSA key pairs (e, m) and (d, m), where
+    RSA Key Generation: Generate RSA key pairs (e, m) and (d, m), where
     ed = 1 (mod phi), and phi is the Euler totient for m.
 
     Parameters
@@ -51,6 +51,7 @@ def rsa_keygen(n: int, max_iteration: int = 1000) -> tuple[int, int, int]:
             return e, d, m
     raise pk.IterationLimitReached(n, max_iteration)
 
+
 ##################### End Exercise 1 #########################
 ##############################################################
 
@@ -58,6 +59,7 @@ def rsa_keygen(n: int, max_iteration: int = 1000) -> tuple[int, int, int]:
 #######################################################################################
 ################## Exercise 2: Implementing RSA Encryption and Decryption #############
 # ---------- Encryption function---------
+
 
 def rsa_encrypt(m: int, e: int, md: int):
     """
@@ -74,10 +76,11 @@ def rsa_encrypt(m: int, e: int, md: int):
         The modulus
 
     """
-    return pk.mod_pow_2(m, e, md)
+    return pk.mod_pow_2(m, e, md)  # Encryption
 
 
 # ------------ Decryption Function
+
 
 def rsa_decrypt(c: int, d: int, md: int):
     """
@@ -93,7 +96,7 @@ def rsa_decrypt(c: int, d: int, md: int):
     md: int
         The modulus
     """
-    return pk.mod_pow_2(c, d, md)
+    return pk.mod_pow_2(c, d, md)  # Decryption
 
 
 ####################################### End Exercise 2 ################################
@@ -102,7 +105,6 @@ def rsa_decrypt(c: int, d: int, md: int):
 
 ##########################################################################
 ######################### Begin Optional ###############################
-
 
 
 def break_rsa(e: int, rsa_m: int, p: int, c: int):
@@ -127,8 +129,8 @@ def break_rsa(e: int, rsa_m: int, p: int, c: int):
     """
     q = rsa_m // p
     if pk.is_prime(q)[0]:
-        phi = (p - 1) * (q - 1)
-        d = pk.mod_inv(e, phi)
+        phi = (p - 1) * (q - 1)  # Euler totient
+        d = pk.mod_inv(e, phi)  # ed = 1 (mod phi)
     else:
         return None
 
@@ -179,7 +181,6 @@ def rsa_factor(n, phi, sqrt_option="nr") -> tuple[int, int]:
     return p, q
 
 
-
 if __name__ == "__main__":
     print("\n-- Using functions from Exercise 1 and 1 --\n")
     expo, dexpo, N = rsa_keygen(30)
@@ -197,22 +198,19 @@ if __name__ == "__main__":
     assert rand_num == decrytp_num
     print("\n ---------------- End -----------------\n\n")
 
+    print("\n -- Optional  Exercice 2 -- \n")
+
+    print(f"Odinary Square root:{rsa_factor(221, 192, 'o')}")
+    print(f"Square root using Newton Raphson method: {rsa_factor(221, 192, 'nr')}")
     print(
-        "\n -- Optional  Exercice 2 -- \n"
-    )
-    print(f"Odinary Square root: {rsa_factor(221, 192, "o")}")
-    print(f"Square root using Newton Raphson method: {rsa_factor(221, 192, "nr")}")
-    print(
-        f"Square root leveraging Binary search algorithm: {rsa_factor(221, 192, "b")}\n\n"
+        f"Square root leveraging Binary search algorithm: {rsa_factor(221, 192, 'b')}\n\n"
     )
 
-    print(f"Odinary Square root: {rsa_factor(2430101, 2426892, "o")}")
+    print(f"Odinary Square root: {rsa_factor(2430101, 2426892, 'o')}")
     print(
-        f"Square root using Newton Raphson method: {rsa_factor(2430101, 2426892, "nr")}"
+        f"Square root using Newton Raphson method: {rsa_factor(2430101, 2426892, 'nr')}"
     )
     print(
-        f"Square root leveraging Binary search algorithm: {rsa_factor(2430101, 2426892, "b")}"
+        f"Square root leveraging Binary search algorithm: {rsa_factor(2430101, 2426892, 'b')}"
     )
-    print(
-        "\n -- End --\n\n"
-    )
+    print("\n -- End --\n\n")

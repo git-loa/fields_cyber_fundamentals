@@ -22,9 +22,7 @@ class CoprimesError(Exception):
     """
 
     def __init__(self, m_list):
-        super().__init__(
-            f" The integers in {m_list} are not pairwise coprimes. Pairwise coprimes required."
-        )
+        super().__init__(f"The integers in {m_list} are not pairwise coprimes.")
 
 
 class PositiveNumberError(Exception):
@@ -341,7 +339,7 @@ def are_pairwise_coprimes(m_list):
     """
     Decide numbers in a list are coprimes
     """
-    for i, _ in enumerate(len(m_list)):
+    for i, _ in enumerate(m_list):
         for j in range(i + 1, len(m_list)):
             if gcd(m_list[i], m_list[j]) != 1:
                 return False
