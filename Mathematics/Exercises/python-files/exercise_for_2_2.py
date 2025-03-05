@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Exercise_for_2_2.py - This module  is a collection of 
+exercise_for_2_2.py - This module is a collection of
 algebraic structures (Rings, Fields) for cryptography.
 """
 import random
@@ -68,8 +68,8 @@ class Ring:
         """
         if poly == []:
             return 0
-        else:
-            return len(poly) - 1
+
+        return len(poly) - 1
 
     # Exercise 1: Polynomial Multiplication
     def polynomial_multiplication(self, poly1: list, poly2: list) -> list:

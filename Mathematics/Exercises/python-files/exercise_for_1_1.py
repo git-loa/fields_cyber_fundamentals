@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-This module for Exercise 1.1
+exercise_for_1_1.py - This module contains functions for Exercise 1.1
 """
 ###################################################################
 ########## Exercise 1: Implementing the Euclidean Algorithm #######
@@ -37,10 +37,9 @@ def gcd(a: int, b: int) -> int:
     if a == 0 and b == 0:
         return 0
 
-
     a, b = abs(a), abs(b)
     while b != 0:
-        a, b = b, a % b # Compute the remainder and reassign to b
+        a, b = b, a % b  # Compute the remainder and reassign to b
 
     return a
 
@@ -111,6 +110,7 @@ def bezout_coeffs(m: int, n: int) -> tuple[int, int, int]:
 ####################################################################################
 ############### Exercise 3: Exercise 1.12 from the Course Text #####################
 
+
 def extended_gcd(a: int, b: int) -> tuple[int, int, int]:
     """
     Computes the gcd of a and b, and finds the coefficients
@@ -175,11 +175,13 @@ if __name__ == "__main__":
     gc, xc, yc = bezout_coeffs(12, 8)
     print(
         f"The gcd of 12 and 8 from bezout_coeffs(12,8) is {gc}. \
-            The bezout coefficients are {xc} and {yc} \n")
+            The bezout coefficients are {xc} and {yc} \n"
+    )
     gc, xc, yc = bezout_coeffs(26513, 32321)
     print(
         f"The gcd of 26513 and 32321 from bezout_coeffs(26513,32321) is {gc}. \
-            The bezout coefficients are {xc} and {yc} \n\n")
+            The bezout coefficients are {xc} and {yc} \n\n"
+    )
 
     print("--------------------- End Question 2  --------------------------\n\n\n")
 

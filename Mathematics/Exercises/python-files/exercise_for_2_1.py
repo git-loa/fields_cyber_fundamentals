@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-This module contain the function group_pow
+exercise_for_2_1.py - This module contains functions for Exercise 2.1
 """
 
 

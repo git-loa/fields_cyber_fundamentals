@@ -570,7 +570,7 @@ def get_prime_2(n: int):
             return p
 
 
-def sqrt_newton_raphson(n: int, precision=1e-10):
+def sqrt_newton_raphson(n: float, precision=1e-10):
     """
     Find the value of x such that f(x) = x^2 - n is zero
     using the Newton Raphson's method.
@@ -599,9 +599,9 @@ def sqrt_newton_raphson(n: int, precision=1e-10):
     return x
 
 
-def sqrt_binary_search(n: int, precision=1e-100):
+def sqrt_binary_search(n: float, precision=1e-100):
     """
-    Find the square root of n leveraging the binary seacrh algorithm..
+    Find the square root of n leveraging the binary seacrh algorithm.
 
     Return
     ------
@@ -611,7 +611,7 @@ def sqrt_binary_search(n: int, precision=1e-100):
     if n < 0:
         raise ValueError("Cannot compute square root of a negative number.")
 
-    left = 0
+    left = float(0)
     right = n
     while True:
         mid = (left + right) / 2

@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 """
-This module is for Exercise 1.6
+exercise_for_1_6.py - This module contains functions for Exercise 1.6
 """
 
 import random

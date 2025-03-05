@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Testing module Exercise 1.6
+Testing module for Exercise 1.6
 """
 import unittest
 from exercise_for_1_6 import break_rsa

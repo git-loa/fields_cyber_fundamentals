@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-This module has function for Exercise 1.1
+exercise_for_1_5.py - This module contains functions for Exercise 1.5
 """
 from CyberFoundations import exercise_package as pk
 
@@ -71,9 +71,7 @@ if __name__ == "__main__":
         print(ve)
     print("\n-- End of a. --\n\n")
 
-    print(
-        "\n-- b. x ≡ 137 (mod 423) and x ≡ 87 (mod 191) -- \n"
-    )
+    print("\n-- b. x ≡ 137 (mod 423) and x ≡ 87 (mod 191) -- \n")
     try:
         m = [423, 191]
         a = [137, 87]
@@ -89,9 +87,7 @@ if __name__ == "__main__":
         print(ve)
     print("\n-- End of b. --\n\n")
 
-    print(
-        "\n-- c. x ≡ 133 (mod 451) and x ≡ 237 (mod 697) -- \n"
-    )
+    print("\n-- c. x ≡ 133 (mod 451) and x ≡ 237 (mod 697) -- \n")
     try:
         m = [451, 697]
         a = [133, 237]
@@ -107,9 +103,7 @@ if __name__ == "__main__":
         print(ve)
     print("\n--- End of c. --\n\n")
 
-    print(
-        "\n-- d. x ≡ 5 (mod 9), x ≡ 6 (mod 10), and x ≡ 7 (mod 11) -- \n"
-    )
+    print("\n-- d. x ≡ 5 (mod 9), x ≡ 6 (mod 10), and x ≡ 7 (mod 11) -- \n")
     try:
         m = [9, 10, 11]
         a = [5, 6, 7]
@@ -125,9 +119,7 @@ if __name__ == "__main__":
         print(ve)
     print("\n-- End of d. --\n\n")
 
-    print(
-        "\n-- e. x ≡ 37 (mod 43), x ≡ 22 (mod 49), and x ≡ 18 (mod 71)  -- \n"
-    )
+    print("\n-- e. x ≡ 37 (mod 43), x ≡ 22 (mod 49), and x ≡ 18 (mod 71)  -- \n")
     try:
         m = [43, 49, 71]
         a = [37, 22, 18]
@@ -160,6 +152,4 @@ if __name__ == "__main__":
         print(sle)
     except ValueError as ve:
         print(ve)
-    print(
-        "\n-- End of Exercise 2: exercise on Cryptohack. --\n\n"
-    )
+    print("\n-- End of Exercise 2: exercise on Cryptohack. --\n\n")

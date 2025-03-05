@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Testing module Exercise 1.5
+Testing module for Exercise 1.5
 """
 
 import unittest

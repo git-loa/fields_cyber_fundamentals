@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-This module contains functions for Exercise 1.4
+exercise_for_1_4.py - This module contains functions for Exercise 1.4
 """
 import random
 from CyberFoundations import exercise_package as pk
@@ -201,9 +201,7 @@ def get_primitive_root(p: int):
 
 
 if __name__ == "__main__":
-    print(
-        "\n--Question 3.15 | Exercise 1: Miller-Rabin Primality Test --\n"
-    )
+    print("\n--Question 3.15 | Exercise 1: Miller-Rabin Primality Test --\n")
     n_list = [1105, 294409, 294439, 118901509, 118901521, 118901527, 118915387]
     for k in n_list:
         prime_bool, witness_composite = is_prime(k)
@@ -213,42 +211,28 @@ if __name__ == "__main__":
             )
         else:
             print(f"{k} is composite. A Miller-Rabin witness: {witness_composite[0]}\n")
-    print(
-        "--- End Exercise 1  ---\n\n"
-    )
+    print("--- End Exercise 1  ---\n\n")
 
-    print(
-        "\n-- Exercise 2: Generating Large Primes --\n"
-    )
+    print("\n-- Exercise 2: Generating Large Primes --\n")
     for k in range(100, 105):
         prime = get_prime(k)
         print(
             f"The randomly generated prime number in the range (2^{k}, 2^{(k+1)}) is {prime}\n"
         )
-    print(
-        "-- End Exercise 2  --\n\n"
-    )
+    print("-- End Exercise 2  --\n\n")
 
-    print(
-        "\n-- Exercise 3: Generating Safe Primes --\n"
-    )
+    print("\n-- Exercise 3: Generating Safe Primes --\n")
     for k in range(100, 105):
         prime = get_safe_prime(k)
         print(
             f"The randomly generated safe prime number in the range (2^{k}, 2^{(k+1)}) is {prime}\n"
         )
 
-    print(
-        "-- End Exercise 3  --\n\n"
-    )
+    print("-- End Exercise 3  --\n\n")
 
-    print(
-        "\n-- Exercise 6: Finding Primitive Roots --\n"
-    )
+    print("\n-- Exercise 6: Finding Primitive Roots --\n")
     safe_prime = get_safe_prime(100)
     print(f"A safe prime is {safe_prime}\n")
     primitive_root = get_primitive_root(safe_prime)
     print(f"A primitive root modulo {safe_prime} is {primitive_root}\n")
-    print(
-        "-- End Exercise 6  --\n\n"
-    )
+    print("-- End Exercise 6  --\n\n")

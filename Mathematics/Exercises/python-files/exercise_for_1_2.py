@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-This module for Exercise 1.2
+exercise_for_1_2.py - This module contains functions for Exercise 1.2
 """
 import functools
 import time
@@ -165,7 +165,7 @@ def mod_pow(a: int, e: int, n: int) -> int:
         Compute the binary represetation of m.
         """
         if m == 0:
-            return 0
+            return [0]
         bin_list = []
 
         # Use bitwise operation to find the binary representation
