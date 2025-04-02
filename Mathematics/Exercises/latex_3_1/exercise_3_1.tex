@@ -1,0 +1,132 @@
+\documentclass[12pt]{ut-thesis}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+%\usepackage{mathptmx}
+%\usepackage{apacite}
+%\usepackage{cite}
+\usepackage[numbers]{natbib}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage[usenames,dvipsnames]{color}
+
+%\usepackage{diagbox}
+\usepackage{rotating}
+\usepackage{chngcntr}
+\usepackage{multicol}
+\usepackage[bf,small,tableposition=top]{caption}
+\usepackage{subcaption}
+
+\usepackage{titlesec}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mathdots}
+\usepackage{amsfonts}
+\usepackage{tcolorbox}
+%\usepackage{extarrows}
+%\usepackage{moreverb}
+\usepackage[page]{totalcount}
+\usepackage{totcount}
+\regtotcounter{page}
+\usepackage[hang, flushmargin]{footmisc}
+\usepackage[colorlinks=true]{hyperref}
+%\usepackage[pdftex, hyperfootnotes=false, colorlinks=false]{hyperref}
+%\usepackage{footnotebackref}
+
+
+\usepackage{tikz-cd}
+
+\usepackage{fancyhdr}
+\setlength{\headheight}{13.2pt}
+
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+
+\fancyhf{}
+\fancyfoot[R]{(\thepage~ of \total{page})}
+\lfoot{Notes and solutions by Leonard O. Afeke \today}
+\chead{Cyber security Fundamentals | Mathematics (Exercise 1.1)}
+
+\DeclareMathOperator{\Frob}{Frob}
+\DeclareMathOperator{\plim}{\underleftarrow{\lim}^{i}}
+\DeclareMathOperator{\lm}{\underleftarrow{\lim}^{*}}
+
+\parskip=0.5\baselineskip
+\parindent=0pt
+\renewcommand{\baselinestretch}{1.5}
+
+%%%%%%%%%%%% Line spacesing codes %%%%%%%%%%%%
+\usepackage{setspace}
+%\singlespacing
+\onehalfspacing
+%\doublespacing
+%\setstretch{1.1}
+
+\usepackage{lineno} % This package together with lineno.sty numbers every line. Makes it easy for edditing.
+
+\newtheorem{thm}[subsection]{Theorem}
+% Rest is not in italics.
+%\theoremstyle{definition}
+\newtheorem{lem}[subsection]{Lemma}
+\newtheorem{cor}[subsection]{Corollary}
+\newtheorem{conj}[subsection]{Conjecture}
+\newtheorem{pro}[subsection]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{defn}[subsection]{Definition}
+\newtheorem{rem}[subsection]{Remark}
+\newtheorem{exa}[subsection]{Example}
+\newtheorem{con}[subsection]{Condition}
+
+\newcommand{\ora}[1]{{\xrightarrow{\hspace{0.2cm #1 \hspace{0.2cm}}}}}
+\newcommand{\ola}[1]{{\xleftarrow{#1}}}
+\newcommand{\hm}[3]{\mathrm{Hom}_{\mathcal{#1}}({#2}, {#3})}
+\newcommand{\dor}[1]{{\xrightarrow{#1}}}
+\newcommand{\sol}[1]{{\bf \emph{Solution}} #1}
+
+\newcommand{\cA}{\mathcal{A}}\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cE}{\mathcal{E}}\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cG}{\mathcal{G}}\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cI}{\mathcal{I}}\newcommand{\cJ}{\mathcal{J}}
+\newcommand{\cK}{\mathcal{K}}\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cM}{\mathcal{M}}\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cO}{\mathcal{O}}\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cQ}{\mathcal{Q}}\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cS}{\mathcal{S}}\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cU}{\mathcal{U}}\newcommand{\cV}{\mathcal{V}}
+\newcommand{\cW}{\mathcal{W}}\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cY}{\mathcal{Y}}\newcommand{\cZ}{\mathcal{Z}}
+
+\newcommand{\bA}{\mathbb{A}}\newcommand{\bB}{\mathbb{B}}
+\newcommand{\bC}{\mathbb{C}}\newcommand{\bD}{\mathbb{D}}
+\newcommand{\bE}{\mathbb{E}}\newcommand{\bF}{\mathbb{F}}
+\newcommand{\bG}{\mathbb{G}}\newcommand{\bH}{\mathbb{H}}
+\newcommand{\bI}{\mathbb{I}}\newcommand{\bJ}{\mathbb{J}}
+\newcommand{\bK}{\mathbb{K}}\newcommand{\bL}{\mathbb{L}}
+\newcommand{\bM}{\mathbb{M}}\newcommand{\bN}{\mathbb{N}}
+\newcommand{\bO}{\mathbb{O}}\newcommand{\bP}{\mathbb{P}}
+\newcommand{\bQ}{\mathbb{Q}}\newcommand{\RR}{\mathbb{R}}
+\newcommand{\bS}{\mathbb{S}}\newcommand{\bT}{\mathbb{T}}
+\newcommand{\bU}{\mathbb{U}}\newcommand{\bV}{\mathbb{V}}
+\newcommand{\bW}{\mathbb{W}}\newcommand{\bX}{\mathbb{X}}
+\newcommand{\bY}{\mathbb{Y}}\newcommand{\bZ}{\mathbb{Z}}
+
+
+\newcommand{\B}[1]{\mathbf{#1}}
+\newcommand{\BB}[1]{\mathbb{#1}}
+\begin{document}
+	\section*{Exercise 5.1}
+	The Rhind papyrus is an ancient Egyptian mathematical manuscript that is
+	more than 3500 years old. Problem 79 of the Rhind papyrus poses a problem that
+	can be paraphrased as follows: there are seven houses; in each house lives seven cats;
+	each cat kills seven mice; each mouse has eaten seven spelt seeds; each spelt seed
+	would have produced seven hekat of spelt. What is the sum of all of the named
+	items? Solve this 3500 year old problem.\\
+
+	\textbf{Solution}
+
+\end{document} 
