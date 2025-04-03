@@ -38,7 +38,7 @@
 \usepackage{tikz-cd}
 
 \usepackage{fancyhdr}
-\setlength{\headheight}{13.2pt}
+\setlength{\headheight}{14.5pt}
 
 \pagestyle{fancy}
 \renewcommand{\headrulewidth}{0.4pt}
@@ -48,7 +48,7 @@
 \fancyhf{}
 \fancyfoot[R]{(\thepage~ of \total{page})}
 \lfoot{Notes and solutions by Leonard O. Afeke \today}
-\chead{Cyber security Fundamentals | Mathematics (Exercise 1.1)}
+\chead{Cyber security Fundamentals | Mathematics (Exercise 3.1)}
 
 \DeclareMathOperator{\Frob}{Frob}
 \DeclareMathOperator{\plim}{\underleftarrow{\lim}^{i}}
@@ -119,14 +119,19 @@
 \newcommand{\B}[1]{\mathbf{#1}}
 \newcommand{\BB}[1]{\mathbb{#1}}
 \begin{document}
-	\section*{Exercise 5.1}
-	The Rhind papyrus is an ancient Egyptian mathematical manuscript that is
-	more than 3500 years old. Problem 79 of the Rhind papyrus poses a problem that
-	can be paraphrased as follows: there are seven houses; in each house lives seven cats;
-	each cat kills seven mice; each mouse has eaten seven spelt seeds; each spelt seed
+	\section*{Exercise 5.1 from textbook}
+	The Rhind papyrus is an ancient Egyptian mathematical manuscript that is more than 3500 years old.
+	Problem 79 of the Rhind papyrus poses a problem that can be paraphrased as follows: there are seven houses;
+	in each house lives seven cats; each cat kills seven mice; each mouse has eaten seven spelt seeds; each spelt seed
 	would have produced seven hekat of spelt. What is the sum of all of the named
-	items? Solve this 3500 year old problem.\\
+	items? Solve this 3500 year old problem.
 
-	\textbf{Solution}
+	\textbf{Solution}\\
+	There are 7 houses. In each house lives 7 cats. This implies that there are $7\times 7 =49$ cats in total.
+	Next, each of the 49 cats kills 7 mice. This implies that there are $49 \times 7 = 343$ mice
+	in total. Again since each of the 343 mice has eaten 7 spelt seeds this again implies that there are $343 \times 7 = 2401$
+	seeds in total. Finally, each spelt seed would have produced 7 hekat, so there are $2401 \times 7 = 16807$ kehat
+	in total.
 
-\end{document} 
+	Now, the sum of all the named items is $7 + 49 + 2401 + 16807 = 19607$.
+\end{document}
