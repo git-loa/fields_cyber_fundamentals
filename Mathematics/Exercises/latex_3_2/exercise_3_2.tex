@@ -1,0 +1,319 @@
+\documentclass[12pt]{ut-thesis}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+%\usepackage{mathptmx}
+%\usepackage{apacite}
+%\usepackage{cite}
+\usepackage[numbers]{natbib}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{listings}
+%\usepackage{diagbox}
+\usepackage{rotating}
+\usepackage{chngcntr}
+\usepackage{multicol}
+\usepackage[bf,small,tableposition=top]{caption}
+\usepackage{subcaption}
+
+\usepackage{titlesec}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mathdots}
+\usepackage{amsfonts}
+\usepackage{tcolorbox}
+%\usepackage{extarrows}
+%\usepackage{moreverb}
+\usepackage[page]{totalcount}
+\usepackage{totcount}
+\regtotcounter{page}
+\usepackage[hang, flushmargin]{footmisc}
+\usepackage[colorlinks=true]{hyperref}
+%\usepackage[pdftex, hyperfootnotes=false, colorlinks=false]{hyperref}
+%\usepackage{footnotebackref}
+
+
+\usepackage{tikz-cd}
+
+\usepackage{fancyhdr}
+\setlength{\headheight}{14.5pt}
+
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+
+\fancyhf{}
+\fancyfoot[R]{(\thepage~ of \total{page})}
+\lfoot{Notes and solutions by Leonard O. Afeke \today}
+\chead{Cyber Security Fundamentals | Mathematics (Exercise 3.1)}
+
+\DeclareMathOperator{\Frob}{Frob}
+\DeclareMathOperator{\plim}{\underleftarrow{\lim}^{i}}
+\DeclareMathOperator{\lm}{\underleftarrow{\lim}^{*}}
+
+\parskip=0.5\baselineskip
+\parindent=0pt
+\renewcommand{\baselinestretch}{1.5}
+
+%%%%%%%%%%%% Line spacesing codes %%%%%%%%%%%%
+\usepackage{setspace}
+%\singlespacing
+\onehalfspacing
+%\doublespacing
+%\setstretch{1.1}
+
+\usepackage{lineno} % This package together with lineno.sty numbers every line. Makes it easy for edditing.
+
+\newtheorem{thm}[subsection]{Theorem}
+% Rest is not in italics.
+%\theoremstyle{definition}
+\newtheorem{lem}[subsection]{Lemma}
+\newtheorem{cor}[subsection]{Corollary}
+\newtheorem{conj}[subsection]{Conjecture}
+\newtheorem{pro}[subsection]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{defn}[subsection]{Definition}
+\newtheorem{rem}[subsection]{Remark}
+\newtheorem{exa}[subsection]{Example}
+\newtheorem{con}[subsection]{Condition}
+
+\newcommand{\ora}[1]{{\xrightarrow{\hspace{0.2cm #1 \hspace{0.2cm}}}}}
+\newcommand{\ola}[1]{{\xleftarrow{#1}}}
+\newcommand{\hm}[3]{\mathrm{Hom}_{\mathcal{#1}}({#2}, {#3})}
+\newcommand{\dor}[1]{{\xrightarrow{#1}}}
+\newcommand{\sol}[1]{{\bf \emph{Solution}} #1}
+
+\newcommand{\cA}{\mathcal{A}}\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cE}{\mathcal{E}}\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cG}{\mathcal{G}}\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cI}{\mathcal{I}}\newcommand{\cJ}{\mathcal{J}}
+\newcommand{\cK}{\mathcal{K}}\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cM}{\mathcal{M}}\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cO}{\mathcal{O}}\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cQ}{\mathcal{Q}}\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cS}{\mathcal{S}}\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cU}{\mathcal{U}}\newcommand{\cV}{\mathcal{V}}
+\newcommand{\cW}{\mathcal{W}}\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cY}{\mathcal{Y}}\newcommand{\cZ}{\mathcal{Z}}
+
+\newcommand{\bA}{\mathbb{A}}\newcommand{\bB}{\mathbb{B}}
+\newcommand{\bC}{\mathbb{C}}\newcommand{\bD}{\mathbb{D}}
+\newcommand{\bE}{\mathbb{E}}\newcommand{\bF}{\mathbb{F}}
+\newcommand{\bG}{\mathbb{G}}\newcommand{\bH}{\mathbb{H}}
+\newcommand{\bI}{\mathbb{I}}\newcommand{\bJ}{\mathbb{J}}
+\newcommand{\bK}{\mathbb{K}}\newcommand{\bL}{\mathbb{L}}
+\newcommand{\bM}{\mathbb{M}}\newcommand{\bN}{\mathbb{N}}
+\newcommand{\bO}{\mathbb{O}}\newcommand{\bP}{\mathbb{P}}
+\newcommand{\bQ}{\mathbb{Q}}\newcommand{\RR}{\mathbb{R}}
+\newcommand{\bS}{\mathbb{S}}\newcommand{\bT}{\mathbb{T}}
+\newcommand{\bU}{\mathbb{U}}\newcommand{\bV}{\mathbb{V}}
+\newcommand{\bW}{\mathbb{W}}\newcommand{\bX}{\mathbb{X}}
+\newcommand{\bY}{\mathbb{Y}}\newcommand{\bZ}{\mathbb{Z}}
+
+
+\newcommand{\B}[1]{\mathbf{#1}}
+\newcommand{\BB}[1]{\mathbb{#1}}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+\lstset{style=mystyle}
+\begin{document}
+	\section*{Exercise 5.27 from textbook}
+	(The Monty Hall Problem) Monty Hall gives Dan the choice of three curtains. 
+	Behind one curtain is a car, while behind the other two curtains are goats. 
+	Dan chooses a curtain, but before it is opened, Monty Hall opens one of the 
+	other curtains and reveals a goat. He then offers Dan the option of keeping 
+	his original curtain or switching to the remaining closed curtain. 
+	The Monty Hall problem is to figure out Dan's best strategy: "To stick or to switch?"
+	\begin{itemize}
+		\item[(a)] What is the probability that Dan wins the car if he always 
+		sticks to his first choice of curtain? What is the probability that 
+		Dan wins the car if he always switches curtains? Which is his best strategy? 
+		(If the answer seems counter-intuitive, suppose instead that there are 1000 
+		curtains and that Monty Hall opens 998 goat curtains. Now what are the winning 
+		probabilities for the two strategies?)
+
+		\textbf{Ans:}
+		\begin{itemize}
+			\item \textbf{Probability of Winning if Dan Sticks to His First Choice:}
+			Since there are three curtains and the car is behind one of them, 
+			Dan's initial choice has a $\frac{1}{3}$ probability of being correct. If he never 
+			switches, he wins the car $\frac{1}{3}$ of the time.
+			\item \textbf{Probability of Winning if Dan Switches:}
+			So, Monty Hall always reveals a goat, meaning the other closed curtain has the 
+			car whenever Dan initially chose a goat.
+			Since Dan originally picks a goat $\frac{2}{3}$ of the time, 
+			switching guarantees a win in those cases. 
+			Thus, the probability of winning by switching is $\frac{2}{3}$
+			\item If there are 1000 curtains, then Dan's initial probabilities of choosing the 
+			car and a goat are $\frac{1}{1000}$ and $\frac{999}{1000}$ respectively.
+
+			Now, if Monty Hall opens 998 goat curtains, leaving only Dan’s chosen curtain 
+			and one other curtain, then Dan has only $\frac{1}{1000}$ chances of winnig if 
+			he never switches. Otherwise, he has $\frac{999}{1000}$.
+		\end{itemize} 
+		All all, the best strategy is to always switch.
+		\item[(b)]Suppose that we give Monty Hall another option, namely he's allowed to 
+		force Dan to stick with his first choice of curtain. Assuming that Monty Hall 
+		dislikes giving away cars, now what is Dan's best strategy, and what is his probability
+		of winning a car?
+
+		\textbf{Ans:}\\
+		If Monty Hall dislikes giving away cars and forces Dan to stick, 
+		then his probability of winning remains at $\frac{1}{3}$.
+		In this case, Dan has no control over his odds, and Monty gets to keep more cars.
+		
+		\item[(c)] More generally, suppose that there are N curtains and M cars, and suppose 
+		that Monty Hall opens K curtains that have goats behind them
+		\begin{itemize}
+			\item \textbf{Probability of winning if Dan sticks:} 
+			\[ Pr(\text{Dan wins a car}\; |\; \text{Dan sticks}) = \frac{M}{N}.\] 
+			Since Dan chooses randomly among N curtains and M of them have cars, 
+			this remains his original probability.
+			\item \textbf{Probability of winning if Dan switches:}
+			The conditional probability is given by
+			\[ Pr(\text{Dan wins a car}\; |\; \text{Dan switches}) = \frac{Pr(\text{Dan win a car} \cap \text{Dan switches})}{Pr(\text{Dan switches})} \]
+			Since Dan is guaranteed a switch atfer the initial pick, we can take $$Pr(\text{Dan switches}) = 1$$
+			So the conditional probability reduces to 
+			\[ Pr(\text{Dan wins a car}\; |\; \text{Dan switches}) = Pr(\text{Dan win a car} \cap \text{Dan switches}).\] So, we need to consider
+			the following.
+			\begin{itemize}
+				\item Dan initially picks a goat
+				\item Monty reveals $K$ goat curtains
+				\item Dan switches to a remaining unopened curtain that has a car
+			\end{itemize}
+			Since switching only helps when Dan's first pick was wrong, 
+			we need the probability that Dan's initial pick was a goat, and 
+			the probability that switching leads to a car.
+
+			The probability of initial pick is a goat is $Pr(\text{Goat}) = \frac{N-M}{N}$. After, 
+			Monty reveals $K$ goats, there are now $N-K-1$ closed curtains, 
+			so the probability that switching leads to a car is $Pr(\text{switch leads to a car}) = \frac{M}{N-K-1}$
+			Mulltiplying the two probabilities give
+			%\[Pr(\text{Dan wins a car} \;|\; \text{Dan switches})= \frac{M(N-M)}{N(N-K-1)} .\] 
+			\begin{eqnarray*}
+				Pr(\text{wins a car} \;|\; \text{switches})&=&Pr(\text{win a car} \cap \text{switches})\\
+				&=& Pr(\text{initial pick is a goat})Pr(\text{switch leads to a car})\\
+				&=& \frac{M(N-M)}{N(N-K-1)}.
+			\end{eqnarray*}
+		\end{itemize}
+		In general, switching is the better strategy, the the probability in this case is alway higher.
+	\end{itemize}
+
+
+	
+	\section*{Exercise 5.28 from textbook}
+	Let $S$ be a set, let $A$ be a property of interest, and suppose that for $m \in S$, we have
+
+	\[Pr(m\; \text{does not have property}\; A) = \delta.\]
+	
+	Suppose further that a Monte Carlo algorithm applied to $m$ and a random number $r$ satisfy:
+	
+	\begin{itemize}
+		\item[(1)] If the algorithm returns Yes, then $m$ definitely has property $A$.
+		\item[(2)] If $m$ has property $A$, then the probability that the algorithm returns Yes is at least $p$.
+	\end{itemize}
+	Notice that we can restate (1) and (2) as conditional probabilities:
+	
+	\begin{itemize}
+		\item $Pr(m\; \text{has property\;} A \;|\; \text{algorithm returns}\; Yes) = 1$
+		\item $Pr(\text{algorithm returns}\; Yes \;|\; m\; \text{has property}\; A) \ge p$
+	\end{itemize}
+	
+	Suppose that we run the algorithm $N$ times on the number $m$, and suppose that the algorithm returns No every single time. 
+	Derive a lower bound, in terms of $\delta, p,$ and $N$, for the probability that $m$ does not have property $A$.
+
+	\textbf{Ans}
+
+	Let 
+	\begin{eqnarray*}
+		E &=& \{\text{an integer in}\; S\; \text{does not have property}\; A\}\\
+		F &=& \{\text{the algorithm returns}\; No\; N\; \text{times in a row}\}.
+	\end{eqnarray*}
+	Then, we want to find the probability that $m$ does not have property $A$, 
+	given that the algorithm returned "No" every time. That is 
+	$Pr(E \;|\; F).$ The Bayesian formula says
+	\begin{eqnarray}
+		Pr(E \;|\; F) &=& \frac{Pr(F \;| \; E) Pr(E)}{P(F)}\nonumber\\
+		&=& \frac{Pr(F \;| \; E) Pr(E)}{Pr(F \;|\; E)Pr(E) + Pr(F\; |\; E^c)Pr(E^c)}
+	\end{eqnarray}
+	We are given that  $Pr(E^c) = 1-\delta$ so, $Pr(E) = \delta$. 
+	
+	Consider $Pr(F\;|\;E).$ By property (1), we have
+	$$Pr(\text{returns}\; No\;|\;\text{does not have A}) = Pr(\text{has A} \; | \; \text{returns}\; Yes)= 1$$. 
+	Since the experiment is run $N$ times, if follows that 
+	\[Pr(F\;|\;E) = Pr(\text{returns}\; No\;|\;\text{does not have A})^N = 1.\]
+
+	Next, we have
+	\begin{eqnarray*}
+		Pr(F\; |\; E^c) &=&Pr(\text{returns}\; No\;|\;\text{has A})^N\\ 
+		&=& \left(1 - Pr(\text{returns}\; Yes\;|\;\text{has A})\right)^N\\
+		&=& \le (1 - p)^N
+	\end{eqnarray*}
+
+	Substituting everything in Equation (1), we have
+	\begin{eqnarray*}
+		Pr(E \;|\; F) &\ge& \frac{1\cdot\delta}{1\cdot\delta + (1 - p)^N\cdot(1-\delta)}\\
+		&=&  \frac{\delta}{\delta + (1 - \delta)(1 - p)^N}
+	\end{eqnarray*}
+	The lower bound is $\frac{\delta}{\delta + (1 - \delta)(1 - p)^N}.$
+	
+	\section*{Exercise 5.30 from textbook}
+	If an integer $n$ is composite, then the Miller–Rabin test has at least a $75\%$ 
+	chance of succeeding in proving that $n$ is composite, while it never misidentifies
+	a prime as being composite. Suppose that we run the Miller–Rabin test $N$ times on
+	the integer $n$ and that it fails to prove that $n$ is composite. 
+	Show that the probability that $n$ is prime satisfies (approximately)
+	\[Pr(n\; \text{is prime}\; |\; \text{the Miller–Rabin test fails}\; N\; \text{times}) \ge 1 - \frac{\ln( n )}{4^N}\]
+	
+	(Hint. Use Exercise 5.28 with appropriate choices of $A, S, \delta,$ and $p$. You may also use the estimate 
+	from Sect. 3.4.1 that the probability that $n$ is prime is approximately $\frac{1}{\ln(n)}$).
+	
+	\begin{thm}[The Prime Number Theorem \cite{hoffstein2014}]
+		A randomly chosen number $n$ has
+probability $\frac{1}{\ln(n)}$ of being prime.
+	\end{thm}
+	\textbf{Answers}\\
+	Let $A$ be the property \emph{\textbf{composite}} and let $S$ be the set of integer. 
+	Choose $\delta = \frac{1}{\ln(n)}$ (The prime number theorem) and $p = 0.75$. Suppose a Monte Carlo algorithm  applied 
+	to an integer $m \in S$ and a witness $r$ satisfy
+	\begin{itemize}
+		\item $Pr(m\; \text{is composite}\; A \;|\; \text{Miller-Rabin returns}\; Yes) = 1$
+		\item $Pr(\text{Miller-Rabin returns}\; Yes \;|\; m\; \text{is composite}) \ge 0.75$
+	\end{itemize}
+	From Exercise 5.28, we have
+	
+	\begin{eqnarray*}
+		Pr(n \text{ is prime} | \text{fails } N \text{ times})&=&Pr(n \text{ is not composite } | \text{ Miller-Rabin returns No } N \text{ times}) \\
+		&\ge&\frac{1}{\ln(n)} \bigg/ \left( \frac{1}{\ln(n)} + \left( 1 - \frac{1}{\ln(n)} \right) \left(\frac{1}{4}\right)^N \right)\\
+		&=& 1 - \frac{\ln(n)-1}{4^N + \ln(n)-1}\\
+		&\ge& 1 - \frac{\ln(n)}{4^N}.
+	\end{eqnarray*}
+	\bibliographystyle{plainnat}
+	\bibliography{references}
+\end{document}

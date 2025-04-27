@@ -1,0 +1,239 @@
+
+\documentclass[12pt]{ut-thesis}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+%\usepackage{mathptmx}
+%\usepackage{apacite}
+%\usepackage{cite}
+\usepackage[numbers]{natbib}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{listings}
+%\usepackage{diagbox}
+\usepackage{rotating}
+\usepackage{chngcntr}
+\usepackage{multicol}
+\usepackage[bf,small,tableposition=top]{caption}
+\usepackage{subcaption}
+
+\usepackage{titlesec}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mathdots}
+\usepackage{amsfonts}
+\usepackage{tcolorbox}
+%\usepackage{extarrows}
+%\usepackage{moreverb}
+\usepackage[page]{totalcount}
+\usepackage{totcount}
+\regtotcounter{page}
+\usepackage[hang, flushmargin]{footmisc}
+\usepackage[colorlinks=true]{hyperref}
+%\usepackage[pdftex, hyperfootnotes=false, colorlinks=false]{hyperref}
+%\usepackage{footnotebackref}
+
+
+\usepackage{tikz-cd}
+
+\usepackage{fancyhdr}
+\setlength{\headheight}{14.5pt}
+
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+
+\fancyhf{}
+\fancyfoot[R]{(\thepage~ of \total{page})}
+\lfoot{Notes and solutions by Leonard O. Afeke \today}
+\chead{Cyber Security Fundamentals | Mathematics (Exercise 3.1)}
+
+\DeclareMathOperator{\Frob}{Frob}
+\DeclareMathOperator{\plim}{\underleftarrow{\lim}^{i}}
+\DeclareMathOperator{\lm}{\underleftarrow{\lim}^{*}}
+
+\parskip=0.5\baselineskip
+\parindent=0pt
+\renewcommand{\baselinestretch}{1.5}
+
+%%%%%%%%%%%% Line spacesing codes %%%%%%%%%%%%
+\usepackage{setspace}
+%\singlespacing
+\onehalfspacing
+%\doublespacing
+%\setstretch{1.1}
+
+\usepackage{lineno} % This package together with lineno.sty numbers every line. Makes it easy for edditing.
+
+\newtheorem{thm}[subsection]{Theorem}
+% Rest is not in italics.
+%\theoremstyle{definition}
+\newtheorem{lem}[subsection]{Lemma}
+\newtheorem{cor}[subsection]{Corollary}
+\newtheorem{conj}[subsection]{Conjecture}
+\newtheorem{pro}[subsection]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{defn}[subsection]{Definition}
+\newtheorem{rem}[subsection]{Remark}
+\newtheorem{exa}[subsection]{Example}
+\newtheorem{con}[subsection]{Condition}
+
+\newcommand{\ora}[1]{{\xrightarrow{\hspace{0.2cm #1 \hspace{0.2cm}}}}}
+\newcommand{\ola}[1]{{\xleftarrow{#1}}}
+\newcommand{\hm}[3]{\mathrm{Hom}_{\mathcal{#1}}({#2}, {#3})}
+\newcommand{\dor}[1]{{\xrightarrow{#1}}}
+\newcommand{\sol}[1]{{\bf \emph{Solution}} #1}
+
+\newcommand{\cA}{\mathcal{A}}\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cE}{\mathcal{E}}\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cG}{\mathcal{G}}\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cI}{\mathcal{I}}\newcommand{\cJ}{\mathcal{J}}
+\newcommand{\cK}{\mathcal{K}}\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cM}{\mathcal{M}}\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cO}{\mathcal{O}}\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cQ}{\mathcal{Q}}\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cS}{\mathcal{S}}\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cU}{\mathcal{U}}\newcommand{\cV}{\mathcal{V}}
+\newcommand{\cW}{\mathcal{W}}\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cY}{\mathcal{Y}}\newcommand{\cZ}{\mathcal{Z}}
+
+\newcommand{\bA}{\mathbb{A}}\newcommand{\bB}{\mathbb{B}}
+\newcommand{\bC}{\mathbb{C}}\newcommand{\bD}{\mathbb{D}}
+\newcommand{\bE}{\mathbb{E}}\newcommand{\bF}{\mathbb{F}}
+\newcommand{\bG}{\mathbb{G}}\newcommand{\bH}{\mathbb{H}}
+\newcommand{\bI}{\mathbb{I}}\newcommand{\bJ}{\mathbb{J}}
+\newcommand{\bK}{\mathbb{K}}\newcommand{\bL}{\mathbb{L}}
+\newcommand{\bM}{\mathbb{M}}\newcommand{\bN}{\mathbb{N}}
+\newcommand{\bO}{\mathbb{O}}\newcommand{\bP}{\mathbb{P}}
+\newcommand{\bQ}{\mathbb{Q}}\newcommand{\RR}{\mathbb{R}}
+\newcommand{\bS}{\mathbb{S}}\newcommand{\bT}{\mathbb{T}}
+\newcommand{\bU}{\mathbb{U}}\newcommand{\bV}{\mathbb{V}}
+\newcommand{\bW}{\mathbb{W}}\newcommand{\bX}{\mathbb{X}}
+\newcommand{\bY}{\mathbb{Y}}\newcommand{\bZ}{\mathbb{Z}}
+
+
+\newcommand{\B}[1]{\mathbf{#1}}
+\newcommand{\BB}[1]{\mathbb{#1}}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+\lstset{style=mystyle}
+\begin{document}
+	\section*{Exercise 1.45}
+    Let $N$ be a large integer and let $K = M = C = \mathbb{Z}/N\mathbb{Z}$. 
+    For each of the functions $$e : K \times M \rightarrow C$$
+    listed in (a)–(c), answer the following questions:
+    \begin{itemize}
+        \item[1] Is $e$ an encryption function?
+        \item[2.] If $e$ is an encryption function, what is its associated decryption function d?
+        \item[3.] If $e$ is not an encryption function, can you make it into an encryption 
+        function by using some smaller, yet reasonably large, set of keys?    
+    \end{itemize}
+    \begin{itemize}
+        \item[(a)] $e_k(m) \equiv k - m(\mod N)$
+        
+        \textbf{Ans:}
+        \begin{enumerate}
+            \item Yes, $e_k(m) \equiv k - m\pmod N$ is an encryption function, 
+            since subtraction is reversible. 
+            \item To recover the message $m$ from the ciphertext $c$, we can solve for $m$ using
+            $m \equiv k - c \pmod{N}$. Thus, the decryption function is the function $d:K\times C \rightarrow M$
+            defined by  $$d_k(c) \equiv k - c \pmod{N}$$ 
+        \end{enumerate}
+        \item[(b)] $e_k(m) \equiv k \cdot m\pmod N$
+        
+        \textbf{Ans:}
+        \begin{enumerate}
+            \item It depends on whether or not $k$ has a modular inverse. 
+            If $k$ has a modular inverse, then  $e_k(m) \equiv k\cdot m\pmod N$ is an encryption function. 
+            Here, $k$ has modular inverse if $(k, N) = 1$.
+            \item  If $k$ is invertible modulo $N$, define its modular inverse 
+            $k^{-1}$, such that $k^{-1} \cdot k \equiv 1 \pmod{N}$. Then the decryption function is  
+            $$d_k(c) \equiv k^{-1} \cdot c \pmod{N}.$$
+        \end{enumerate}
+        \item[(c)] $e_k(m) \equiv (k + m)^2\pmod N$
+        
+        \textbf{Ans:}
+        \begin{enumerate}
+            \item No, this function is not always invertible, because squaring loses 
+            sign information and can lead to collisions (that is, multiple plaintexts mapping to the same ciphertext).
+
+            \item  If $k + m$ is restricted to a subset of values that allow unique reversibility, then we can
+            make the function an encryption function. For example, working only within a specific modular residue class
+            such as the subset of quadratic residues modulo $N$.
+
+
+        \end{enumerate}
+    \end{itemize}
+    
+    
+    
+
+
+    \section*{Exercise 1.47}
+        Alice and Bob choose a key space $K$ containing 256 keys. Eve builds a special-purpose 
+        computer that can check $10,000,000,000$ keys per second.
+
+        \begin{itemize}
+            \item[(a)] How many days does it take Eve to check half of the keys in $K$?
+            
+            \textbf{Ans}
+
+            The time required for Eve to check half the keys in $K$ is computed as follows.
+            Half the keys is $\frac{256}{2} = 128 \text{ keys}.$ At a rate of $10^{10}$ keys per second, the time taken for Alice 
+            to check half of the keys in K is $\frac{128}{10^{10}} \text{ seconds} = 1.28 \times 10^{-8} \text{ seconds}$ which 
+            is approximately $\frac{1.28}{864\times 10^{10}}$ days.
+
+
+           
+
+            \item[(b)] Alice and Bob replace their key space with a larger set containing $2^B$ different keys. 
+            How large should Alice and Bob choose $B$ in order to force Eve's computer to spend $100$ years 
+            checking half the keys? (Use the approximation that there are $365.25$ days in a year.)
+
+            \textbf{Ans}
+
+            Half the keys is $\frac{2^B}{2} = 2^{B-1}$, and 100 years in seconds is 
+            $100 \times 365.25 \times 24 \times 60 \times 60 =3155760000 \text{ seconds}$. Set up the equation
+            $$\frac{2^{B-1}}{10^{10}} \text{ sec} = 3155760000 \text{ sec},$$ to obtain 
+            $$2^{B-1}= 3.15576\times 10^{19}.$$
+            Take logarithms to get
+            \begin{eqnarray*}
+                B &=& 1 + \log_2(3.15576\times 10^{19})\\
+                 &=& 1 + \frac{\log_{10}(3.15576) + \log_{10}(10^{19})}{\log_{10}(2)}\\
+                 &=& 1 + \frac{\log_{10}(3.15576) + 19}{\log_{10}(2)}\\
+                 &=& 1 + \frac{19.4991}{0.3010}\\
+                 &=& 65.7746.
+            \end{eqnarray*}
+            Thus, Alice and Bob should choose $B \approx 66$ to ensure 100 years of security against Eve's computer.
+
+
+        \end{itemize}  
+        
+        
+\end{document}

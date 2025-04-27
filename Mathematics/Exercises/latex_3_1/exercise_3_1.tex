@@ -9,7 +9,7 @@
 \usepackage{enumitem}
 \usepackage{graphicx}
 \usepackage[usenames,dvipsnames]{color}
-
+\usepackage{listings}
 %\usepackage{diagbox}
 \usepackage{rotating}
 \usepackage{chngcntr}
@@ -48,7 +48,7 @@
 \fancyhf{}
 \fancyfoot[R]{(\thepage~ of \total{page})}
 \lfoot{Notes and solutions by Leonard O. Afeke \today}
-\chead{Cyber security Fundamentals | Mathematics (Exercise 3.1)}
+\chead{Cyber Security Fundamentals | Mathematics (Exercise 3.1)}
 
 \DeclareMathOperator{\Frob}{Frob}
 \DeclareMathOperator{\plim}{\underleftarrow{\lim}^{i}}
@@ -118,6 +118,30 @@
 
 \newcommand{\B}[1]{\mathbf{#1}}
 \newcommand{\BB}[1]{\mathbb{#1}}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+\lstset{style=mystyle}
 \begin{document}
 	\section*{Exercise 5.1 from textbook}
 	The Rhind papyrus is an ancient Egyptian mathematical manuscript that is more than 3500 years old.
@@ -134,4 +158,93 @@
 	in total.
 
 	Now, the sum of all the named items is $7 + 49 + 2401 + 16807 = 19607$.
+
+	\section*{Exercise 5.2 from textbook}
+	\begin{itemize}
+		\item[(a)] How many n-tuples $(x_1, x_2, \cdots , x_n)$ are there if the coordinates are required
+		to be integers satisfying $0 \le x_i < q$?\\
+		\textbf{Ans:} There are $q$ possible choices for each $x_i$, since \( 0 \leq x_i < q \). 
+		Since there are $n$ independent coordinates, the total number of n-tuples is $q^n$.
+
+		\item[(b)] Same question as (a), except now there are separate bounds $0 \le x_i < q_i$ for
+		each coordinate.\\
+		\textbf{Ans:} There are $q_i$ choices for each $x_i$. It follows that the total number of 
+		n-tuples is $q_1 q_2\cdots q_n$.
+
+		\item[(c)] How many $n\times n$ matrices are there if the entries $x_{i,j}$ of the matrix are integers
+		satisfying $0 \le x_{i,j} < q$?\\
+		\textbf{Ans:} By part (a), total number of $n \times n$ matrices with entries $x_{i,j}$ are $q^{n^2}$.
+
+		\item[(d)] Same question as (a), except now the order of the coordinates does not matter.
+		So for example, (0, 0, 1, 3) and (1, 0, 3, 0) are considered the same. (This one is
+		rather tricky.)
+
+		\textbf{Ans:} Since the order of the coordinates does not matter, this problem follows the combinatorial 
+		principle of combinations with repetition. So, we can think of it as placing $n$ objects into $q$ containers.
+		In other words, this is choosing $n$ items from a total of $n+q-1$ items, which is
+		given by $\binom{q + n - 1}{n}$.
+
+		\item[(e)] Twelve students are each taking four classes, for each class they need two looseleaf
+		notebooks, for each notebook they need 100 sheets of paper, and each sheet
+		of paper has 32 lines on it. Altogether, how many students, classes, notebooks,
+		sheets, and lines are there?\\
+		\textbf{Ans:}
+		Given 12 students, each enrolled in 4 classes, the total class count is $12 \times 4 = 48$. 
+		Each class requires 2 notebooks, yielding $48 \times 2 = 96$ notebooks. 
+		Each notebook contains 100 sheets, resulting in  $96 \times 100 = 9600$  sheets.
+		Each sheet holds 32 lines, leading to $9600 \times 32 = 307,200$ lines.
+		The classroom collectively comprises 12 students, 48 classes, 96 notebooks, 9,600 sheets, and 307,200 lines.
+		So, the total count of all items considered in the classroom is $316956$.
+	\end{itemize}
+
+	\section*{Exercise 5.9 from textbook}
+	We know that there are n! different permutations of the set $\{1, 2, \cdots, n\}$
+	\begin{itemize}
+		\item[(a)] How many of these permutations leave no number fixed?
+		\item[(b)] How many of these permutations leave at least one number fixed?
+		\item[(c)] How many of these permutations leave exactly one number fixed?
+		\item[(d)] How many of these permutations leave at least two numbers fixed?
+	\end{itemize}
+	For each part of this problem, give a formula or algorithm that can be used to
+	compute the answer for an arbitrary value of n, and then compute the value for 
+	$n=10$ and $n = 26$.
+
+	\textbf{Answers}
+	\begin{itemize}
+		\item[(a)]This is the number of derangement. That is, the number of permutations that leave no number fixes. 
+		The formula for this permutation, denoted as $!n$ is given by
+		\[ !n = n! \sum_{k=0}^{n} \frac{(-1)^k}{k!} .\]
+		
+		\begin{lstlisting}[language=Python, caption=Exercise 5.9 (a)- Derangement python Implementation]
+			import math
+			def derangement(n):
+				"""Compute the number of derangements (!n) using the inclusion-exclusion principle."""
+				return round(
+					math.factorial(n) * sum((-1) ** k / math.factorial(k) for k in range(n + 1))
+				)
+		\end{lstlisting}
+
+		The summation is approximately $\frac{1}{e}$ for large values of $n$. So,
+		\begin{itemize}
+			\item For $n=10$, we have $!10 = 1334961$ 
+			\item For $n=26$, we have $!26 = 148362637348470138328842240$
+		\end{itemize}
+		\item[(b)] This is the complement of derangements. So, the number of permutations that leave at least 
+		one number fixed is given by $n! - !n$.
+		\begin{itemize}
+			\item For $n=10$, we have $10! - !10 = 3628800 - 1334961 = 2293839$ 
+			\item For $n=26$, we have $26! - !26  = 254928823778135497255157760$
+		\end{itemize}
+		\item[(c)] To count permutations that fix exactly one element and move the others, pick one fixed element from the $n$
+		choices and permute the remaining 9 elemnts. This is given by $n \times !(n-1).$
+		\begin{itemize}
+			\item For $n=10$, we have $10 \times !9 = 10 \times 133496 = 1334960$ 
+			\item For $n=26$, we have $26 \times !25 = 148362637348470127591424000$
+		\end{itemize}
+		\item[(d)] The number of permutations that leave at least two numbers fixed is given by $ n! - n \cdot !(n-1).$
+		\item[] \begin{itemize}
+			\item For $n=10$, we have $10! - 10 \cdot !(9)  = 2293840$ 
+			\item For $n=26$, we have $26! - 26 \cdot !(25) =  254928823778135507992576000$
+		\end{itemize}
+	\end{itemize}
 \end{document}
