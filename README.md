@@ -1,5 +1,5 @@
 
-# Fields Cybersecurity Fundamentals
+# The Fields Institute Cybersecurity Fundamentals
 
 A curated collection of projects, exercises, and resources completed as part of the **Fields Institute Cybersecurity Fundamentals** program.  
 Covers Linux, Python, Mathematics, and Networking — blending theoretical foundations with hands‑on implementation.
